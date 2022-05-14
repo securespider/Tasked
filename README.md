@@ -12,11 +12,9 @@ NUS CP2106 Independent Software Development Project (Orbital)
 We aim to provide a one-stop Android app for an organisational tool to improve workflows packaged in a clean and vibrant theme.
 
 ### Tech Stack
-Android Studio
-
-Java
-
-Firebase
+* Android Studio
+* Java
+* Firebase
 
 ### Product
 Android Mobile Application
