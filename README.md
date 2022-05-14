@@ -13,7 +13,9 @@ We aim to provide a one-stop Android app for an organisational tool to improve w
 
 ### Tech Stack
 Android Studio
+
 Java
+
 Firebase
 
 ### Product
