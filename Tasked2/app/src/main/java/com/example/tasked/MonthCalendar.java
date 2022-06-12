@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.DatePicker;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +23,8 @@ import static com.example.tasked.CalendarUtils.monthYearFromDate;
  */
 public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.OnItemListener
 {
-    private TextView monthYearText;
+    private Button monthYearText;
+    private DatePickerDialog datePicker;
     private RecyclerView calendarRecyclerView;
 
 
@@ -38,7 +41,12 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
     private void initWidgets()
     {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
-        monthYearText = findViewById(R.id.monthYearTV);
+        monthYearText = findViewById(R.id.btnMonthYear);
+
+    }
+
+    public void selectMonthAction(View view) {
+        CalendarUtils.selectDateDialog(this, this::setMonthView);
     }
 
     private void setMonthView()

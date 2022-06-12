@@ -1,5 +1,11 @@
 package com.example.tasked;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.view.View;
+import android.widget.DatePicker;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -98,5 +104,27 @@ public class CalendarUtils
         return null;
     }
 
+    public static int[] selectedDateInArray(LocalDate selectedDate) {
+        return new int[] {selectedDate.getYear(), selectedDate.getMonthValue(), selectedDate.getDayOfMonth()};
+    }
+
+    public static void selectDateDialog(Context instance, Runnable runnable) {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                CalendarUtils.selectedDate = LocalDate.of(year, ++month, dayOfMonth);
+                runnable.run();
+            }
+        };
+
+        int[] selectedDate = CalendarUtils.selectedDateInArray(CalendarUtils.selectedDate);
+        new DatePickerDialog(
+            instance,
+            AlertDialog.THEME_HOLO_LIGHT,
+            dateSetListener,
+            selectedDate[0],
+            selectedDate[1] - 1,
+            selectedDate[2]).show();
+    }
 
 }
