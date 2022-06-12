@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.time.LocalDate;
@@ -15,15 +14,22 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static com.example.tasked.CalendarInfo.daysInMonthArray;
+import static com.example.tasked.CalendarInfo.daysInWeekArray;
+
 public class Calendar extends AppCompatActivity implements CalendarAdapter.OnItemListener {
 
-    private Button nextMonth;
-    private Button prevMonth;
-    private Button selectMonth;
-    private LocalDate selectedDate;
+    private Button nextMonth; // left arrow
+    private Button prevMonth; // right arrow
+    private Button selectMonth; // text is the selected month and it also serves as a more specific date selector
     private RecyclerView rvCalendar;
 
 
+    /**
+     * Default method for activity creation.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +39,15 @@ public class Calendar extends AppCompatActivity implements CalendarAdapter.OnIte
         this.prevMonth = findViewById(R.id.btnPrevMonth);
         this.selectMonth = findViewById(R.id.btnSelectMonth);
         this.rvCalendar = findViewById(R.id.rvCalendar);
+        CalendarInfo.selectedDate = LocalDate.now();
+
+
+        // TODO: Make date interactive ie scroll wheel for changing specific date
 
         nextMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedDate = selectedDate.plusMonths(1);
+                CalendarInfo.selectedDate = CalendarInfo.selectedDate.plusMonths(1);
                 setMonthView();
             }
         });
@@ -45,19 +55,19 @@ public class Calendar extends AppCompatActivity implements CalendarAdapter.OnIte
         prevMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedDate = selectedDate.minusMonths(1);
+                CalendarInfo.selectedDate = CalendarInfo.selectedDate.minusMonths(1);
                 setMonthView();
             }
         });
 
-        selectedDate = LocalDate.now();
+        CalendarInfo.selectedDate = LocalDate.now();
         setMonthView();
     }
 
     private void setMonthView()
     {
-        selectMonth.setText(monthYearFromDate(selectedDate));
-        ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
+        selectMonth.setText(monthYearFromDate(CalendarInfo.selectedDate));
+        ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarInfo.selectedDate);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
@@ -65,29 +75,6 @@ public class Calendar extends AppCompatActivity implements CalendarAdapter.OnIte
         rvCalendar.setAdapter(calendarAdapter);
     }
 
-    private ArrayList<String> daysInMonthArray(LocalDate date)
-    {
-        ArrayList<String> daysInMonthArray = new ArrayList<>();
-        YearMonth yearMonth = YearMonth.from(date);
-
-        int daysInMonth = yearMonth.lengthOfMonth();
-
-        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-        for(int i = 1; i <= 42; i++)
-        {
-            if(i <= dayOfWeek || i > daysInMonth + dayOfWeek)
-            {
-                daysInMonthArray.add("");
-            }
-            else
-            {
-                daysInMonthArray.add(String.valueOf(i - dayOfWeek));
-            }
-        }
-        return  daysInMonthArray;
-    }
 
     private String monthYearFromDate(LocalDate date)
     {
@@ -100,7 +87,7 @@ public class Calendar extends AppCompatActivity implements CalendarAdapter.OnIte
     {
         if(!dayText.equals(""))
         {
-            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
+            String message = "Selected Date " + dayText + " " + monthYearFromDate(CalendarInfo.selectedDate);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }

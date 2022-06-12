@@ -34,7 +34,7 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 
         // maximum of 31 days - each row 7 days
         // in worst case, we start the month on a saturday, so we need max of 6 rows for all dates
-        layoutParams.height = (int) (parent.getHeight() * 0.166666666);
+        layoutParams.height = (int) (parent.getHeight() / 6);
 
         return new CalendarViewHolder(view, onItemListener);
     }
