@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".WeekViewActivity">
+    tools:context=".WeekViewActivity"
+    android:background="@color/mustard">
 
     <Button
         android:layout_width="wrap_content"
@@ -46,7 +47,8 @@
             android:text="Feb 2021"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:background="@color/darkMustard"/>
 
         <Button
             android:layout_width="0dp"
@@ -64,7 +66,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="0dp"
@@ -127,7 +130,7 @@
             android:text="SAT"
             android:textColor="@color/gray"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textSize="16sp"/> 
 
 
     </LinearLayout>
@@ -137,24 +140,33 @@
         android:id="@+id/calendarRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:background="@color/white"/>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Event"
-        android:textColor="@color/blue"
-        android:background="@null"
-        android:textStyle="bold"
-        android:onClick="newEventAction"
-        android:layout_gravity="center"
-        android:textSize="20sp"/>
+        android:background="@color/white">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Event"
+            android:textColor="@color/blue"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"
+            android:onClick="newEventAction"
+            android:layout_gravity="center"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/eventListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"/>
+        android:layout_weight="5"
+        android:background="@color/white"/>
 
 
 </LinearLayout>
