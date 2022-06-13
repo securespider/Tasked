@@ -26,27 +26,44 @@
         android:ems="10"
         android:inputType="text"/>
 
-    <TextView
-        android:id="@+id/eventDateTV"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnEventDatePicker"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20sp"
         android:text="Date"
-        android:textSize="20sp"
+        android:onClick="selectDate"
+        android:textSize="15sp"
         android:textAlignment="center"
         android:textColor="@color/black"/>
 
-    <TextView
-        android:id="@+id/eventTimeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Time"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:textColor="@color/black"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnStartTimePicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Start Time"
+            android:onClick="selectTime"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:textColor="@color/black"/>
+        <!--Button
+            android:id="@+id/btnEndTimePicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="End Time"
+            android:onClick="selectTime"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:textColor="@color/black"/-->
+    </LinearLayout>
 
     <Button
         android:layout_marginTop="20dp"

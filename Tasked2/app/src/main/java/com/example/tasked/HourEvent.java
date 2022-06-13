@@ -3,7 +3,7 @@ package com.example.tasked;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-class HourEvent
+class  HourEvent
 {
     LocalTime time;
     ArrayList<Event> events;
