@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ import java.util.Locale;
 public class DailyCalendarActivity extends AppCompatActivity
 {
 
-    private TextView monthDayText;
+    private Button btnMonthDay;
     private TextView dayOfWeekTV;
     private ListView hourListView;
 
@@ -34,9 +35,13 @@ public class DailyCalendarActivity extends AppCompatActivity
 
     private void initWidgets()
     {
-        monthDayText = findViewById(R.id.monthDayText);
+        btnMonthDay = findViewById(R.id.btnMonthDay);
         dayOfWeekTV = findViewById(R.id.dayOfWeekTV);
         hourListView = findViewById(R.id.hourListView);
+    }
+
+    public void selectDayAction(View view) {
+        CalendarUtils.selectDateDialog(this, this::setDayView);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class DailyCalendarActivity extends AppCompatActivity
 
     private void setDayView()
     {
-        monthDayText.setText(CalendarUtils.monthDayFromDate(selectedDate));
+        btnMonthDay.setText(CalendarUtils.monthDayFromDate(selectedDate));
         String dayOfWeek = selectedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
         dayOfWeekTV.setText(dayOfWeek);
         setHourAdapter();

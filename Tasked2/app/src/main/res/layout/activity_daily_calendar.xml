@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DailyCalendarActivity">
+    tools:context=".DailyCalendarActivity"
+    android:background="@color/mustard">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,12 +26,14 @@
             android:onClick="previousDayAction"
             android:textSize="20sp"/>
 
-        <TextView
-            android:id="@+id/monthDayText"
+        <Button
+            android:id="@+id/btnMonthDay"
+            android:onClick="selectDayAction"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:text="Feb 2021"
+            android:background="@color/darkMustard"
+            android:text="June 13"
             android:textSize="20sp"
             android:textAlignment="center"
             android:textColor="@color/black"/>
@@ -58,21 +61,29 @@
         android:textAlignment="center"
         android:textSize="18sp"/>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Event"
-        android:textColor="@color/blue"
-        android:background="@null"
-        android:textStyle="bold"
-        android:onClick="newEventAction"
-        android:layout_gravity="center"
-        android:textSize="20sp"/>
+        android:background="@color/white"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Event"
+            android:textColor="@color/blue"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"
+            android:onClick="newEventAction"
+            android:layout_gravity="center"
+            android:textSize="20sp"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/hourListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"/>
+        android:layout_weight="5"
+        android:background="@color/white"/>
 
 </LinearLayout>
