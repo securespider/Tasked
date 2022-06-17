@@ -7,34 +7,28 @@
     android:orientation="vertical"
     tools:context=".EventEditActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Name:"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:textColor="@color/black"/>
-
     <EditText
-        android:id="@+id/eventNameET"
+        android:id="@+id/etEventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="20sp"
         android:ems="10"
+        android:layout_marginTop="20dp"
+        android:hint="@string/name"
         android:inputType="text"/>
+
+<!--    TODO: change all the shapes of the buttons to rounded -->
 
     <Button
         android:id="@+id/btnEventDatePicker"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="20sp"
-        android:text="Date"
+        android:text="Date: "
         android:onClick="selectDate"
         android:textSize="15sp"
-        android:textAlignment="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_shape_round"
         android:textColor="@color/black"/>
 
     <LinearLayout
@@ -42,28 +36,45 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btnStartTimePicker"
+            android:id="@+id/btnStartEventTimePicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Start Time"
-            android:onClick="selectTime"
+            android:text="From: "
+            android:textSize="15sp"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/btnEndEventTimePicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="To: "
             android:textSize="15sp"
             android:textAlignment="center"
             android:textColor="@color/black"/>
-        <!--Button
-            android:id="@+id/btnEndTimePicker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="End Time"
-            android:onClick="selectTime"
-            android:textSize="15sp"
-            android:textAlignment="center"
-            android:textColor="@color/black"/-->
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/desc"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/etEventDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="10"
+        android:minLines="5"
+        android:gravity="start"
+        android:maxLines="15"
+        android:hint="@string/descPrompt" />
 
     <Button
         android:layout_marginTop="20dp"

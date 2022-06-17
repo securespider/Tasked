@@ -27,7 +27,7 @@ public class Event
 
         for(Event event : eventsList)
         {
-            int eventHour = event.time.getHour();
+            int eventHour = event.startEventTime.getHour();
             int cellHour = time.getHour();
             if(event.getDate().equals(date) && eventHour == cellHour)
                 events.add(event);
@@ -38,14 +38,14 @@ public class Event
 
 
     private String name;
-    private LocalDate date;
-    private LocalTime time;
+    private LocalDate eventDate;
+    private LocalTime startEventTime, endEventTime;
 
-    public Event(String name, LocalDate date, LocalTime time)
-    {
+    public Event(String name, LocalDate eventDate, LocalTime startEventTime, LocalTime endEventTime) {
         this.name = name;
-        this.date = date;
-        this.time = time;
+        this.eventDate = eventDate;
+        this.startEventTime = startEventTime;
+        this.endEventTime = endEventTime;
     }
 
     public String getName()
@@ -60,17 +60,17 @@ public class Event
 
     public LocalDate getDate()
     {
-        return date;
+        return eventDate;
     }
 
     public void setDate(LocalDate date)
     {
-        this.date = date;
+        this.eventDate = date;
     }
 
     public LocalTime getTime()
     {
-        return time;
+        return startEventTime;
     }
 
     public void setTime(LocalTime time)

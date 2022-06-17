@@ -2,4 +2,8 @@
     <string name="app_name">Tasked</string>
     <string name="back"><![CDATA[<]]></string>
     <string name="forward"><![CDATA[>]]></string>
+    <string name="desc">Description of Event:</string>
+    <string name="descPrompt">Please fill in your event details here</string>
+    <string name="name">Event Name</string>
+
 </resources>
