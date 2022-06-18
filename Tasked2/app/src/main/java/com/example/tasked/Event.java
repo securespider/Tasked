@@ -14,7 +14,7 @@ public class Event
 
         for(Event event : eventsList)
         {
-            if(event.getDate().equals(date))
+            if(event.getEventDate().equals(date))
                 events.add(event);
         }
 
@@ -29,7 +29,10 @@ public class Event
         {
             int eventHour = event.startEventTime.getHour();
             int cellHour = time.getHour();
-            if(event.getDate().equals(date) && eventHour == cellHour)
+            int startHour = event.startEventTime.getHour();
+            int endHour = event.endEventTime.getHour();
+            // time is between start and end time of 
+            if(event.getEventDate().equals(date) && startHour <= cellHour && endHour > cellHour)
                 events.add(event);
         }
 
@@ -48,33 +51,35 @@ public class Event
         this.endEventTime = endEventTime;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public LocalDate getDate()
-    {
+    public LocalDate getEventDate() {
         return eventDate;
     }
 
-    public void setDate(LocalDate date)
-    {
-        this.eventDate = date;
+    public void setEventDate(LocalDate eventDate) {
+        this.eventDate = eventDate;
     }
 
-    public LocalTime getTime()
-    {
+    public LocalTime getStartEventTime() {
         return startEventTime;
     }
 
-    public void setTime(LocalTime time)
-    {
-        this.time = time;
+    public void setStartEventTime(LocalTime startEventTime) {
+        this.startEventTime = startEventTime;
+    }
+
+    public LocalTime getEndEventTime() {
+        return endEventTime;
+    }
+
+    public void setEndEventTime(LocalTime endEventTime) {
+        this.endEventTime = endEventTime;
     }
 }

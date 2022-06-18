@@ -2,7 +2,9 @@ package com.example.tasked;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +46,7 @@ public class EventEditActivity extends AppCompatActivity
     private void initWidgets()
     {
         // set default start and end time based on current time
-        startTime = LocalTime.now().withMinute(0).withNano(0).withSecond(0); // only hour for easier readability
+        startTime = LocalTime.of(LocalTime.now().getHour(), 0); // only hour for easier readability
         endTime = startTime.plusHours(1);
         if (! isValidEndTime()) {
             // current time is past 11pm so endtime shld be 2359
@@ -62,18 +64,14 @@ public class EventEditActivity extends AppCompatActivity
         btnStartEventTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startTime = selectTimeUtil(startTime);
+                selectTimeUtil(true);
                 setEventView();
             }
         });
         btnEndEventTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                endTime = selectTimeUtil(endTime);
-                while (!isValidEndTime()) {
-                    Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
-                    endTime = selectTimeUtil(endTime);
-                }
+                selectTimeUtil(false);
                 setEventView();
             }
         });
@@ -88,7 +86,7 @@ public class EventEditActivity extends AppCompatActivity
      * 2. endTime
      */
     private boolean isValidEndTime() {
-        return startTime.isAfter(endTime);
+        return startTime.isBefore(endTime);
     }
 
     /**
@@ -104,19 +102,29 @@ public class EventEditActivity extends AppCompatActivity
     /**
      * Utility method for creation of time dialog box for start and end time selection.
      * 
-     * @param time the default time shown in the box
-     * @return New selected time the user has chosen
+     * @param isStartTime Checks if this timepicker is for the start or end time
      */
-    private LocalTime selectTimeUtil(LocalTime time) {
+    private void selectTimeUtil(boolean isStartTime) {
 
-        final LocalTime[] result = new LocalTime[1];
         TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                result[0] = LocalTime.of(hourOfDay, minute);
+                if (isStartTime) {
+                    startTime = LocalTime.of(hourOfDay, minute);
+                } else {
+                    endTime = LocalTime.of(hourOfDay, minute);
+                }
                 setEventView();
             }
         };
+
+        LocalTime time;
+
+        if (isStartTime) {
+            time = startTime;
+        } else {
+            time = endTime;
+        }
 
         TimePickerDialog dialog = new TimePickerDialog(
                 this,
@@ -124,8 +132,16 @@ public class EventEditActivity extends AppCompatActivity
                 time.getHour(),
                 time.getMinute(),
                 true);
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                while (!isValidEndTime()) {
+                    Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            }
+        });
         dialog.show();
-        return result[0];
     }
 
     /**
@@ -133,12 +149,13 @@ public class EventEditActivity extends AppCompatActivity
      */
     public void setEventView() {
         btnEventDate.setText("Date: " + CalendarUtils.formattedDate(CalendarUtils.selectedDate));
-        btnStartEventTime.setText("From: " + CalendarUtils.formattedTime(startTime));
-        btnEndEventTime.setText("To: " + CalendarUtils.formattedTime(endTime));
+        btnStartEventTime.setText("From: " + CalendarUtils.formattedShortTime(startTime));
+        btnEndEventTime.setText("To: " + CalendarUtils.formattedShortTime(endTime));
     }
 
     /**
      * Onclick method for saving this event
+     *
      * @param view
      */
     public void saveEventAction(View view)
