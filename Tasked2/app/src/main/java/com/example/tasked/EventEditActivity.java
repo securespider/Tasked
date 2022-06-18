@@ -25,7 +25,7 @@ import java.util.Calendar;
 public class EventEditActivity extends AppCompatActivity
 {
     // Constants
-    private final static CharSequence INVALIDTIME = "Invalid Time. Please choose a different end time";
+    private final static CharSequence INVALIDTIME = "Invalid! Start time should be before End Time";
     
     
     private EditText etEventName;
@@ -114,6 +114,9 @@ public class EventEditActivity extends AppCompatActivity
                 } else {
                     endTime = LocalTime.of(hourOfDay, minute);
                 }
+                if (!isValidEndTime()) {
+                    Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
+                }
                 setEventView();
             }
         };
@@ -132,16 +135,20 @@ public class EventEditActivity extends AppCompatActivity
                 time.getHour(),
                 time.getMinute(),
                 true);
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                while (!isValidEndTime()) {
-                    Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
-                }
-                dialog.dismiss();
-            }
-        });
+//        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                while (!isValidEndTime()) {
+//                    Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
+//                }
+//                dialog.dismiss();
+//            }
+//        });
         dialog.show();
+//        while (!isValidEndTime()) {
+//            Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
+//            dialog.show();
+//        }
     }
 
     /**
@@ -160,9 +167,13 @@ public class EventEditActivity extends AppCompatActivity
      */
     public void saveEventAction(View view)
     {
-        String eventName = etEventName.getText().toString();
-        Event newEvent = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime);
-        Event.eventsList.add(newEvent);
-        finish(); // does not go to the new date but the date that was previously selected
+        if (isValidEndTime()) {
+            String eventName = etEventName.getText().toString();
+            Event newEvent = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime);
+            Event.eventsList.add(newEvent);
+            finish(); // does not go to the new date but the date that was previously selected
+        }
+
+        Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
     }
 }
