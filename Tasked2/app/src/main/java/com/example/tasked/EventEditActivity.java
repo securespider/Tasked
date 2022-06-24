@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +27,10 @@ public class EventEditActivity extends AppCompatActivity
 {
     // Constants
     private final static CharSequence INVALIDTIME = "Invalid! Start time should be before End Time";
+    private final static CharSequence NOPACKAGEMANAGER = "There is no calendar app to support this";
     
     
-    private EditText etEventName;
+    private EditText etEventName, etEventDescription;
     private Button btnEventDate, btnStartEventTime, btnEndEventTime;
 
     private LocalTime startTime, endTime;
@@ -54,6 +56,7 @@ public class EventEditActivity extends AppCompatActivity
         }
 
         etEventName = findViewById(R.id.etEventName);
+        etEventDescription = findViewById(R.id.etEventDescription);
         btnEventDate = findViewById(R.id.btnEventDatePicker);
 
         // set default time interval
@@ -135,20 +138,8 @@ public class EventEditActivity extends AppCompatActivity
                 time.getHour(),
                 time.getMinute(),
                 true);
-//        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                while (!isValidEndTime()) {
-//                    Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
-//                }
-//                dialog.dismiss();
-//            }
-//        });
+
         dialog.show();
-//        while (!isValidEndTime()) {
-//            Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
-//            dialog.show();
-//        }
     }
 
     /**
@@ -160,6 +151,7 @@ public class EventEditActivity extends AppCompatActivity
         btnEndEventTime.setText("To: " + CalendarUtils.formattedShortTime(endTime));
     }
 
+
     /**
      * Onclick method for saving this event
      *
@@ -169,11 +161,12 @@ public class EventEditActivity extends AppCompatActivity
     {
         if (isValidEndTime()) {
             String eventName = etEventName.getText().toString();
-            Event newEvent = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime);
+            String description = etEventDescription.getText().toString();
+            Event newEvent = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description);
             Event.eventsList.add(newEvent);
             finish(); // does not go to the new date but the date that was previously selected
+        } else {
+            Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
         }
-
-        Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
     }
 }

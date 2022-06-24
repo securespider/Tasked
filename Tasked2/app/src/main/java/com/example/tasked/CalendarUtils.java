@@ -3,8 +3,13 @@ package com.example.tasked;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.DatePicker;
+
+import org.json.JSONObject;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -12,6 +17,7 @@ import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CalendarUtils
 {
@@ -125,6 +131,39 @@ public class CalendarUtils
             selectedDate[0],
             selectedDate[1] - 1,
             selectedDate[2]).show();
+    }
+
+    public static Calendar localDateTimeToCalendar(LocalDate date, LocalTime time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(
+                date.getYear(),
+                date.getMonthValue() - 1,
+                date.getDayOfMonth(),
+                time.getHour(),
+                time.getMinute(),
+                time.getSecond()
+        );
+        return calendar;
+    }
+
+    public static Intent addEventToCalendar(Event event) {
+        Calendar beginTime = localDateTimeToCalendar(event.getEventDate(), event.getStartEventTime());
+        Calendar endTime = localDateTimeToCalendar(event.getEventDate(), event.getEndEventTime());
+
+
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                .putExtra(CalendarContract.Events.TITLE, event.getName())
+                .putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
+        return intent;
+    }
+
+    public static Intent editEvent(Event event) {
+        // TODO: 
+        return new Intent();
     }
 
 }

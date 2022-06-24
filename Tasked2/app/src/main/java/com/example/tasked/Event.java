@@ -40,23 +40,24 @@ public class Event
     }
 
 
-    private String name;
+    private String name, description;
     private LocalDate eventDate;
     private LocalTime startEventTime, endEventTime;
 
-    public Event(String name, LocalDate eventDate, LocalTime startEventTime, LocalTime endEventTime) {
+    public Event(String name, LocalDate eventDate, LocalTime startEventTime, LocalTime endEventTime, String description) {
         this.name = name;
         this.eventDate = eventDate;
         this.startEventTime = startEventTime;
         this.endEventTime = endEventTime;
+        this.description = description;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDescription() {
+        return description;
     }
 
     public LocalDate getEventDate() {

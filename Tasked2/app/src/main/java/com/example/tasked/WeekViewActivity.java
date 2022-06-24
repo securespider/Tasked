@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -95,7 +96,8 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     public void newEventAction(View view)
     {
-        startActivity(new Intent(this, EventEditActivity.class));
+        Intent intent = new Intent(this, EventEditActivity.class);
+        startActivity(intent);
     }
 
     public void dailyAction(View view)
