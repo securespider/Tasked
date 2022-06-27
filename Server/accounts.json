@@ -1,0 +1,15 @@
+{
+    "number_of_accounts": "2",
+    "accounts": [
+        {
+            "username": "temp",
+            "password": "pass",
+            "user-id": "1"
+        },
+        {
+            "username": "1",
+            "password": "1",
+            "user-id": "2"
+        }
+    ]
+}
