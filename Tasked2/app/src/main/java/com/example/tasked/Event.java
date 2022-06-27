@@ -1,5 +1,8 @@
 package com.example.tasked;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -27,7 +30,6 @@ public class Event
 
         for(Event event : eventsList)
         {
-            int eventHour = event.startEventTime.getHour();
             int cellHour = time.getHour();
             int startHour = event.startEventTime.getHour();
             int endHour = event.endEventTime.getHour();
@@ -37,6 +39,23 @@ public class Event
         }
 
         return events;
+    }
+
+    /**
+     * Util function that is used to convert event objects into JSONObject for easy storage and transfer.
+     *
+     * @param event Event that is being converted to JSONObject
+     * @return The JSONObject
+     * @throws JSONException
+     */
+    public static JSONObject eventToJSON(Event event) throws JSONException {
+        JSONObject result = new JSONObject();
+        result.putOpt("name", event.name);
+        result.putOpt("description", event.description);
+        result.putOpt("date", event.eventDate);
+        result.putOpt("startTime", event.startEventTime);
+        result.putOpt("endTime", event.endEventTime);
+        return result;
     }
 
 

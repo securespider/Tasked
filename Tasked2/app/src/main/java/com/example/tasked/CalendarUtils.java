@@ -161,6 +161,10 @@ public class CalendarUtils
         return intent;
     }
 
+//    private static JSONObject infoToJson(String... info) {
+//        JSONObject result = new JSONObject();
+//    }
+
     public static Intent editEvent(Event event) {
         // TODO: 
         return new Intent();

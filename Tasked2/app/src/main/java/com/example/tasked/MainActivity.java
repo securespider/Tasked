@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This is the login page and the first activity that the user will interact with.
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private TextView errorMessage;
+    private CharSequence WRONGPASSWORD = "The username or password was incorrect.";
     private int attemptsLeft = 5; // designated maximum attempts until user will be logged out
     // TODO: attemptsLeft tied to username/device instead of instance
 
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean passwordManager (String username, String password) {
         // TODO: method to interact with the password management server
+        if (username == "wrongUser"){
+            return false;
+        }
         return true;
     }
 
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else {
+            Toast.makeText(this, WRONGPASSWORD, Toast.LENGTH_SHORT).show();
             if (--attemptsLeft == 0) {
                 login.setEnabled((false));
 
