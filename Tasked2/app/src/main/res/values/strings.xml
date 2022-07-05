@@ -5,5 +5,7 @@
     <string name="desc">Description of Event:</string>
     <string name="descPrompt">Please fill in your event details here</string>
     <string name="name">Event Name</string>
-
+    <string name="incorrectPass">Your app has been locked, please contact an administrator or reset your password</string>
+    <string name="createAccount">Create a new account</string>
+    <string name="forgetPass">Forget password</string>
 </resources>

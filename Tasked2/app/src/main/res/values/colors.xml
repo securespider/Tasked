@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tasked">#FFEACC</color>
+    <color name="darkGray">#63666A</color>
 </resources>

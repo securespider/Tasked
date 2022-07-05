@@ -16,9 +16,8 @@ import android.widget.Toast;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private EditText username;
-    private EditText password;
-    private Button login;
+    private EditText username, password;
+    private Button login, forgetPassword, register;
     private TextView errorMessage;
     private CharSequence WRONGPASSWORD = "The username or password was incorrect.";
     private int attemptsLeft = 5; // designated maximum attempts until user will be logged out
@@ -36,7 +35,24 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.etName);
         password = (EditText) findViewById(R.id.etPassword);
         login = (Button) findViewById(R.id.btnLogin);
+        register = (Button) findViewById(R.id.btnRegisterAccount);
+        forgetPassword = (Button) findViewById(R.id.btnForgetPassword);
         errorMessage = (TextView) findViewById(R.id.tvError);
+
+        // Onclick methods for register and forgetPassword
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegisterAccount.class));
+            }
+        });
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ForgetPassword.class));
+            }
+        });
     }
 
     private boolean passwordManager (String username, String password) {
@@ -47,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Onclick method for login button
+     * @param view
+     */
     public void validate (View view) {
         String stUsername = this.username.getText().toString(),
                 stPassword = this.password.getText().toString();
