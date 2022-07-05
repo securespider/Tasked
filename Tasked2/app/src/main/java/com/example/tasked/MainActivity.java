@@ -1,14 +1,20 @@
 package com.example.tasked;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * This is the login page and the first activity that the user will interact with.
@@ -16,12 +22,18 @@ import android.widget.Toast;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private EditText username, password;
+    // Firebase declaration
+    private FirebaseAuth mAuth;
+
+
+    
+    // Widget declarations
+    private EditText email, password;
     private Button login, forgetPassword, register;
     private TextView errorMessage;
-    private CharSequence WRONGPASSWORD = "The username or password was incorrect.";
+    private CharSequence WRONGPASSWORD = "The email or password was incorrect.";
     private int attemptsLeft = 5; // designated maximum attempts until user will be logged out
-    // TODO: attemptsLeft tied to username/device instead of instance
+    // TODO: attemptsLeft tied to email/device instead of instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWidgets() {
-        username = (EditText) findViewById(R.id.etName);
+        mAuth = FirebaseAuth.getInstance();
+
+        email = (EditText) findViewById(R.id.etName);
         password = (EditText) findViewById(R.id.etPassword);
         login = (Button) findViewById(R.id.btnLogin);
         register = (Button) findViewById(R.id.btnRegisterAccount);
@@ -55,33 +69,56 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean passwordManager (String username, String password) {
-        // TODO: method to interact with the password management server
-        if (username == "wrongUser"){
-            return false;
+    private void inputValidation(String strEmail, String strPassword) {
+        if (strEmail.isEmpty()) {
+            email.setError("Email is required");
+            email.requestFocus();
+            return;
         }
-        return true;
+
+        if (strPassword.isEmpty()) {
+            password.setError("Password is required");
+            password.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
+            email.setError("Please provide valid email");
+            email.requestFocus();
+            return;
+        }
     }
+
+
 
     /**
      * Onclick method for login button
      * @param view
      */
     public void validate (View view) {
-        String stUsername = this.username.getText().toString(),
-                stPassword = this.password.getText().toString();
-        if (passwordManager(stUsername, stPassword)) {
-            Intent intent = new Intent(this, MonthCalendar.class); // used to move to other activity
-            startActivity(intent);
-        }
-        else {
-            Toast.makeText(this, WRONGPASSWORD, Toast.LENGTH_SHORT).show();
-            if (--attemptsLeft == 0) {
-                login.setEnabled((false));
+        String strEmail = this.email.getText().toString().trim(),
+                strPassword = this.password.getText().toString().trim();
 
-                // message saying that maximum attempts limit has been reached
-                errorMessage.setVisibility(View.VISIBLE);
-            }
+        inputValidation(strEmail, strPassword);
+
+
+        mAuth.signInWithEmailAndPassword(strEmail, strPassword)
+                .addOnCompleteListener(MainActivity.this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        CalendarUtils.user = mAuth.getCurrentUser();
+                        Intent intent = new Intent(MainActivity.this, MonthCalendar.class); // used to move to other activity
+                        startActivity(intent);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(MainActivity.this, WRONGPASSWORD, Toast.LENGTH_SHORT).show();
+                        if (--attemptsLeft == 0) {
+                            login.setEnabled((false));
+
+                            // message saying that maximum attempts limit has been reached
+                            errorMessage.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
         }
-    }
 }

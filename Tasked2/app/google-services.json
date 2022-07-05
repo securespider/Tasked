@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "881183339869",
+    "project_id": "tasked-44a12",
+    "storage_bucket": "tasked-44a12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881183339869:android:4cefa4ec4ba29b819c24b4",
+        "android_client_info": {
+          "package_name": "com.example.tasked"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881183339869-l197uved96s7dgnr41alc2d59mf2hni1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPPKFpmbh7k4MHZbtrIg24XdplBzUXvuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881183339869-l197uved96s7dgnr41alc2d59mf2hni1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

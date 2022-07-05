@@ -9,6 +9,8 @@ import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.DatePicker;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import org.json.JSONObject;
 
 import java.time.DayOfWeek;
@@ -22,6 +24,7 @@ import java.util.Calendar;
 public class CalendarUtils
 {
     public static LocalDate selectedDate;
+    public static FirebaseUser user;
 
     public static String formattedDate(LocalDate date)
     {

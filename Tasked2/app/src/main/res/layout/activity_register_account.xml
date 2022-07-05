@@ -27,15 +27,6 @@
         android:textColor="#000"
         android:textSize="30sp" />
 
-    <EditText
-        android:id="@+id/etRegName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Enter Username"
-        android:textColor="#000"
-        android:layout_marginTop="30dp"
-        android:gravity="center"/>
 
     <EditText
         android:id="@+id/etRegEmail"
@@ -44,15 +35,25 @@
         android:inputType="textEmailAddress"
         android:hint="Enter Email"
         android:textColor="#000"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"/>
 
     <EditText
-        android:id="@+id/etRegPassword"
+        android:id="@+id/etRegPassword1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="Enter Password"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/etRegPassword2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Confirm Password"
         android:textColor="#000"
         android:ems="10"
         android:layout_marginTop="20dp"

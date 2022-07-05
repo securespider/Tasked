@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Email / Username"
+        android:hint="Email"
         android:textSize="20sp"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
