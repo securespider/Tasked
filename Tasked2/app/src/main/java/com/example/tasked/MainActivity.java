@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,24 +70,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void inputValidation(String strEmail, String strPassword) {
+    private boolean isInputValid(String strEmail, String strPassword) {
         if (strEmail.isEmpty()) {
             email.setError("Email is required");
             email.requestFocus();
-            return;
+            return false;
         }
 
         if (strPassword.isEmpty()) {
             password.setError("Password is required");
             password.requestFocus();
-            return;
+            return false;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
             email.setError("Please provide valid email");
             email.requestFocus();
-            return;
+            return false;
         }
+        return true;
     }
 
 
@@ -99,8 +101,9 @@ public class MainActivity extends AppCompatActivity {
         String strEmail = this.email.getText().toString().trim(),
                 strPassword = this.password.getText().toString().trim();
 
-        inputValidation(strEmail, strPassword);
-
+        if (!isInputValid(strEmail, strPassword)) {
+            return;
+        }
 
         mAuth.signInWithEmailAndPassword(strEmail, strPassword)
                 .addOnCompleteListener(MainActivity.this, task -> {

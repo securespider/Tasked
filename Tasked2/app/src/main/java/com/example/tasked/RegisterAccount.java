@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class RegisterAccount extends AppCompatActivity {
 
@@ -35,13 +38,13 @@ public class RegisterAccount extends AppCompatActivity {
     private void initWidgets() {
         mAuth = FirebaseAuth.getInstance();
 
-        email = findViewById(R.id.etRegEmail);
-        password1 = findViewById(R.id.etRegPassword1);
-        password2 = findViewById(R.id.etRegPassword2);
+        email = (EditText) findViewById(R.id.etRegEmail);
+        password1 = (EditText) findViewById(R.id.etRegPassword1);
+        password2 = (EditText) findViewById(R.id.etRegPassword2);
 
     }
 
-    private void inputValidation() {
+    private boolean isInputValid() {
         strEmail = email.getText().toString().trim();
         strPassword1 = password1.getText().toString().trim();
         strPassword2 = password2.getText().toString().trim();
@@ -49,46 +52,68 @@ public class RegisterAccount extends AppCompatActivity {
         if (strEmail.isEmpty()) {
             email.setError("Email is required");
             email.requestFocus();
-            return;
+            return false;
         }
 
         if (strPassword1.isEmpty()) {
             password1.setError("Password is required");
             password1.requestFocus();
-            return;
+            return false;
         }
 
         if (strPassword2.isEmpty()) {
             password2.setError("Password is required");
             password2.requestFocus();
-            return;
+            return false;
         }
 
         if (!strPassword2.equals(strPassword1)) {
             password2.setError("The password is not the same");
             password2.requestFocus();
-            return;
+            return false;
         }
 
         if (strPassword1.length() < 7) {
             password1.setError("Password should be longer than 8 characters");
             password1.requestFocus();
-            return;
+            return false;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
             email.setError("Please provide valid email");
             email.requestFocus();
-            return;
+            return false;
         }
+        return true;
     }
 
     public void registerAccount(View view) {
-        inputValidation();
+        if (!isInputValid()) {
+            return;
+        }
+
         mAuth.createUserWithEmailAndPassword(strEmail, strPassword1)
                 .addOnCompleteListener(RegisterAccount.this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         CalendarUtils.user = mAuth.getCurrentUser();
+
+
+                        // Initialise the database with new list of events
+                        FirebaseDatabase.getInstance("https://tasked-44a12-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                .getReference("Users")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .setValue(new User())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (!task.isSuccessful()) {
+                                            Toast.makeText(RegisterAccount.this, "Authentication failed!",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                        Toast.makeText(RegisterAccount.this, "Account created.",
+                                Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterAccount.this, MonthCalendar.class));
                     } else {
                         // If sign in fails, display a message to the user.

@@ -30,7 +30,7 @@ public class EventAdapter extends ArrayAdapter<Event>
 
         TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
 
-        String eventTitle = event.getName() +" "+ CalendarUtils.formattedShortTime(event.getStartEventTime());
+        String eventTitle = event.getName() + " " + CalendarUtils.formattedShortTime(event.getStartEventTime());
         eventCellTV.setText(eventTitle);
         return convertView;
     }
