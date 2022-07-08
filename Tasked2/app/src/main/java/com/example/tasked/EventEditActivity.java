@@ -27,8 +27,7 @@ public class EventEditActivity extends AppCompatActivity
 {
     // Constants
     private final static CharSequence INVALIDTIME = "Invalid! Start time should be before End Time";
-    private final static CharSequence NOPACKAGEMANAGER = "There is no calendar app to support this";
-    
+
     
     private EditText etEventName, etEventDescription;
     private Button btnEventDate, btnStartEventTime, btnEndEventTime;
@@ -41,6 +40,10 @@ public class EventEditActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
 
+        boolean isModify = getIntent().getExtras().getBoolean("isModify");
+        if (isModify) {
+            // TODO: Create function for calendar to be modified instead of only created
+        }
         initWidgets();
         setEventView();
     }
@@ -157,16 +160,20 @@ public class EventEditActivity extends AppCompatActivity
      *
      * @param view
      */
-    public void saveEventAction(View view)
-    {
+    public void saveEventAction(View view) {
         if (isValidEndTime()) {
             String eventName = etEventName.getText().toString();
             String description = etEventDescription.getText().toString();
             Event newEvent = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description);
-            Event.eventsList.add(newEvent);
+            User.user.addEvent(newEvent);
             finish(); // does not go to the new date but the date that was previously selected
         } else {
             Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void cancelEvent(View view) {
+        // TODO: either delete the event or return without doing anything
+        finish();
     }
 }

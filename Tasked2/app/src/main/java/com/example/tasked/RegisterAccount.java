@@ -95,23 +95,8 @@ public class RegisterAccount extends AppCompatActivity {
                 .addOnCompleteListener(RegisterAccount.this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        CalendarUtils.user = mAuth.getCurrentUser();
+                        User user = User.of(mAuth.getCurrentUser());
 
-
-                        // Initialise the database with new list of events
-                        FirebaseDatabase.getInstance("https://tasked-44a12-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                                .getReference("Users")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .setValue(new User())
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (!task.isSuccessful()) {
-                                            Toast.makeText(RegisterAccount.this, "Authentication failed!",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
                         Toast.makeText(RegisterAccount.this, "Account created.",
                                 Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterAccount.this, MonthCalendar.class));

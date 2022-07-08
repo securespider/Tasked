@@ -76,16 +76,36 @@
         android:maxLines="15"
         android:hint="@string/descPrompt" />
 
-    <Button
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:textColor="@color/blue"
-        android:background="@null"
-        android:textStyle="bold"
-        android:onClick="saveEventAction"
-        android:layout_gravity="center"
-        android:textSize="20sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textColor="@color/blue"
+            android:background="@null"
+            android:textStyle="bold"
+            android:onClick="saveEventAction"
+            android:layout_gravity="center"
+            android:textSize="20sp"/>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="@color/blue"
+            android:background="@null"
+            android:textStyle="bold"
+            android:onClick="cancelEvent"
+            android:layout_gravity="center"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

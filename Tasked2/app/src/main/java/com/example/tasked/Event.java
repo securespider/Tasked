@@ -1,11 +1,16 @@
 package com.example.tasked;
 
+import android.content.Intent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Event
 {
@@ -42,21 +47,51 @@ public class Event
     }
 
     /**
-     * Util function that is used to convert event objects into JSONObject for easy storage and transfer.
+     * Utility function to convert EventList into map for easy addition into
      *
-     * @param event Event that is being converted to JSONObject
-     * @return The JSONObject
-     * @throws JSONException
+     * Child will be
+     * @return
      */
-    public static JSONObject eventToJSON(Event event) throws JSONException {
-        JSONObject result = new JSONObject();
-        result.putOpt("name", event.name);
-        result.putOpt("description", event.description);
-        result.putOpt("date", event.eventDate);
-        result.putOpt("startTime", event.startEventTime);
-        result.putOpt("endTime", event.endEventTime);
+    public static Map<String, Map<String, String>> eventListToMap() {
+        Map<String, Map<String, String>> result = new HashMap<>();
+        for (Event event: Event.eventsList) {
+            result.put(Integer.toString(event.hashCode()), event.eventToMap());
+        }
         return result;
     }
+
+
+    /**
+     * Utility function to convert individual events to map.
+     *
+     * @return
+     */
+    public Map<String, String> eventToMap() {
+        Map<String, String> mapEvent = new HashMap<>();
+        mapEvent.put("name", this.name);
+        mapEvent.put("description", this.description);
+        mapEvent.put("date", this.eventDate.toString());
+        mapEvent.put("startTime", this.startEventTime.toString());
+        mapEvent.put("endTime", this.endEventTime.toString());
+        return mapEvent;
+    }
+
+//    /**
+//     * Util function that is used to convert map back to ArrayList for events.
+//     *
+//     * @param event Event that is being converted to JSONObject
+//     * @return The JSONObject
+//     * @throws JSONException
+//     */
+//    public static ArrayList<Event> mapToEventList() {
+//        JSONObject result = new JSONObject();
+//        result.putOpt("name", event.name);
+//        result.putOpt("description", event.description);
+//        result.putOpt("date", event.eventDate);
+//        result.putOpt("startTime", event.startEventTime);
+//        result.putOpt("endTime", event.endEventTime);
+//        return result;
+//    }
 
 
     private String name, description;
@@ -101,5 +136,18 @@ public class Event
 
     public void setEndEventTime(LocalTime endEventTime) {
         this.endEventTime = endEventTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return Objects.equals(name, event.name) && Objects.equals(eventDate, event.eventDate) && Objects.equals(startEventTime, event.startEventTime) && Objects.equals(endEventTime, event.endEventTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, eventDate, startEventTime, endEventTime);
     }
 }
