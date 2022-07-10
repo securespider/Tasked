@@ -33,7 +33,6 @@ public class User {
     // With these various attributes
     public FirebaseUser currentUser;
     public String uid;
-    public Map<String, Map<String, Object>> events = Event.listToMap();
 
     private User(@NonNull FirebaseUser user) {
         this.currentUser = user;
@@ -42,43 +41,47 @@ public class User {
 
     public static User of(FirebaseUser user) {
         User.user = new User(user);
-//        retrieveAllData();
+        retrieveAllData();
         return User.user;
     }
 
-//    public static void retrieveAllData() {
-//        REF.child(user.uid).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                @SuppressWarnings("unchecked")
-//                Map<String, Map<String, Object>> dataSnapshot = (Map<String, Map<String, Object>>) snapshot.getValue();
-//                User.user.events = dataSnapshot;
-//                Event.eventsList = collectEvents(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Event.eventsList = new ArrayList<>();
-//            }
-//        });
-//    }
-//    private static ArrayList<Event> collectEvents(Map<String, Map<String, Object>> eventList) {
-//        if (eventList == null) {
-//            return new ArrayList<>();
-//        }
-//        ArrayList<Event> events = new ArrayList<>();
-//        for (Map.Entry<String, Map<String,Object>> entry: eventList.entrySet()) {
-//            Map<String, Object> fields = entry.getValue();
-//            String name = (String) fields.get("name");
-//            String date = (String) fields.get("date");
-//            String startTime = (String) fields.get("startTime");
-//            String endTime = (String) fields.get("endTime");
-//            String description = (String) fields.get("description");
-//            Event event = new Event(name, date, startTime, endTime, description);
-//            events.add(event);
-//        }
-//        return events;
-//    }
+    public static void retrieveAllData() {
+        REF.child(user.uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Event> result = new ArrayList<>();
+                if (snapshot.exists()) {
+                    @SuppressWarnings("unchecked")
+                    Map<String, Map<String, String>> dataSnapshot = (Map<String, Map<String, String>>) snapshot.getValue();
+                    result = collectEvents(dataSnapshot);
+                }
+                Event.eventsList = result;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Event.eventsList = new ArrayList<>();
+            }
+        });
+    }
+    private static ArrayList<Event> collectEvents(Map<String, Map<String, String>> eventList) {
+        if (eventList == null) {
+            return new ArrayList<>();
+        }
+        ArrayList<Event> events = new ArrayList<>();
+        for (Map.Entry<String, Map<String,String>> entry: eventList.entrySet()) {
+            Map<String, String> fields = entry.getValue();
+            String name = fields.get("name");
+            String date = fields.get("date");
+            String startTime = fields.get("startTime");
+            String endTime = fields.get("endTime");
+            String description = fields.get("description");
+            Event event = new Event(name, date, startTime, endTime, description);
+            events.add(event);
+            Log.v("entry", name + " added");
+        }
+        return events;
+    }
 
     public void addEvent(Event event) {
         Event.eventsList.add(event);
