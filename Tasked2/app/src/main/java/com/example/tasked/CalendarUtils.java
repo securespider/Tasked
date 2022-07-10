@@ -147,19 +147,19 @@ public class CalendarUtils
             selectedDate[2]).show();
     }
 
-    public static Calendar localDateTimeToCalendar(LocalDate date, LocalTime time) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-        calendar.set(
-                date.getYear(),
-                date.getMonthValue() - 1,
-                date.getDayOfMonth(),
-                time.getHour(),
-                time.getMinute(),
-                time.getSecond()
-        );
-        return calendar;
-    }
+//    public static Calendar localDateTimeToCalendar(LocalDate date, LocalTime time) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.clear();
+//        calendar.set(
+//                date.getYear(),
+//                date.getMonthValue() - 1,
+//                date.getDayOfMonth(),
+//                time.getHour(),
+//                time.getMinute(),
+//                time.getSecond()
+//        );
+//        return calendar;
+//    }
 
 
 

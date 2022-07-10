@@ -86,9 +86,15 @@ public class User {
     public void addEvent(Event event) {
         Event.eventsList.add(event);
         Map<String, Object> map = event.toMap();
-        Log.v("well", "reached here");
-        REF.child(uid).push().setValue(map);
-        Log.v("nice", "saved data");
+        REF.child(uid).child(String.valueOf(event.hashCode())).setValue(map);
+    }
+
+    public void removeEvent(Event event) {
+        if (Event.eventsList.contains(event)) {
+            Event.eventsList.remove(event);
+            REF.child(uid).child(String.valueOf(event.hashCode())).removeValue();
+            Log.v("Event", "event deleted " + event.getName());
+        }
     }
 
 //    public static boolean addEventToFirebase (Event event) {

@@ -8,12 +8,12 @@ import org.json.JSONObject;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Event
-{
+public class Event implements Comparable<Event> {
     public static ArrayList<Event> eventsList = new ArrayList<>();
 
     public static ArrayList<Event> eventsForDate(LocalDate date)
@@ -25,7 +25,7 @@ public class Event
             if(event.getEventDate().equals(date))
                 events.add(event);
         }
-
+        Collections.sort(events);
         return events;
     }
 
@@ -47,9 +47,8 @@ public class Event
     }
 
     /**
-     * Utility function to convert EventList into map for easy addition into
+     * Utility function to convert EventList into map for easy addition into database
      *
-     * Child will be
      * @return
      */
     public static Map<String, Map<String, Object>> listToMap() {
@@ -93,6 +92,9 @@ public class Event
 //        return result;
 //    }
 
+    // Used to pass Events to be modified across activities
+    public static boolean isModify = false;
+    public static Event modifyEvent;
 
     private String name, description;
     private LocalDate eventDate;
@@ -177,5 +179,10 @@ public class Event
     @Override
     public int hashCode() {
         return Objects.hash(name, eventDate, startEventTime, endEventTime);
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        return this.startEventTime.compareTo(o.startEventTime);
     }
 }

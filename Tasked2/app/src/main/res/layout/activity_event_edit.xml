@@ -94,6 +94,7 @@
             android:textSize="20sp"/>
 
         <Button
+            android:id="@+id/btnCancel"
             android:layout_marginTop="20dp"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -102,7 +103,6 @@
             android:textColor="@color/blue"
             android:background="@null"
             android:textStyle="bold"
-            android:onClick="cancelEvent"
             android:layout_gravity="center"
             android:textSize="20sp"/>
 

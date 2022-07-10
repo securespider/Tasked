@@ -28,9 +28,9 @@ public class EventEditActivity extends AppCompatActivity
     // Constants
     private final static CharSequence INVALIDTIME = "Invalid! Start time should be before End Time";
 
-    
+    Event event;
     private EditText etEventName, etEventDescription;
-    private Button btnEventDate, btnStartEventTime, btnEndEventTime;
+    private Button btnEventDate, btnStartEventTime, btnEndEventTime, btnCancel;
 
     private LocalTime startTime, endTime;
 
@@ -39,17 +39,29 @@ public class EventEditActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
-
-//        boolean isModify = getIntent().getExtras().getBoolean("isModify");
-//        if (isModify) {
-//            // TODO: Create function for calendar to be modified instead of only created
-//        }
         initWidgets();
+
+        if (Event.isModify) {
+            initModifiedEvent();
+        } else {
+            initNewEvent();
+        }
         setEventView();
     }
 
-    private void initWidgets()
-    {
+    // Event is supposed to be modified
+    private void initModifiedEvent() {
+        this.event = Event.modifyEvent;
+        startTime = this.event.getStartEventTime();
+        endTime = this.event.getEndEventTime();
+
+        // change text to previous data
+        etEventName.setText(this.event.getName(), TextView.BufferType.EDITABLE);
+        etEventDescription.setText(this.event.getDescription(), TextView.BufferType.EDITABLE);
+        btnCancel.setText((CharSequence) "Delete");
+    }
+
+    private void initNewEvent() {
         // set default start and end time based on current time
         startTime = LocalTime.of(LocalTime.now().getHour(), 0); // only hour for easier readability
         endTime = startTime.plusHours(1);
@@ -57,10 +69,14 @@ public class EventEditActivity extends AppCompatActivity
             // current time is past 11pm so endtime shld be 2359
             endTime = LocalTime.of(23, 59);
         }
+    }
 
+    private void initWidgets()
+    {
         etEventName = findViewById(R.id.etEventName);
         etEventDescription = findViewById(R.id.etEventDescription);
         btnEventDate = findViewById(R.id.btnEventDatePicker);
+        btnCancel = findViewById(R.id.btnCancel);
 
         // set default time interval
         btnStartEventTime = findViewById(R.id.btnStartEventTimePicker);
@@ -79,6 +95,17 @@ public class EventEditActivity extends AppCompatActivity
             public void onClick(View v) {
                 selectTimeUtil(false);
                 setEventView();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Event.isModify) {
+                    User.user.removeEvent(Event.modifyEvent);
+                }
+                Event.isModify = false;
+                finish();
             }
         });
 
@@ -162,18 +189,18 @@ public class EventEditActivity extends AppCompatActivity
      */
     public void saveEventAction(View view) {
         if (isValidEndTime()) {
+            if (Event.isModify) {
+                User.user.removeEvent(Event.modifyEvent);
+                Event.isModify = false;
+            }
             String eventName = etEventName.getText().toString();
             String description = etEventDescription.getText().toString();
-            Event newEvent = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description);
-            User.user.addEvent(newEvent);
+            this.event = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description);
+            User.user.addEvent(this.event);
             finish(); // does not go to the new date but the date that was previously selected
         } else {
             Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
         }
     }
 
-//    public void cancelEvent(View view) {
-//        // TODO: either delete the event or return without doing anything
-//        finish();
-//    }
 }
