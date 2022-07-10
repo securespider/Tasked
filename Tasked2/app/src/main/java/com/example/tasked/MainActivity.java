@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(MainActivity.this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        User user = User.of(mAuth.getCurrentUser());
+                        User.of(mAuth.getCurrentUser());
 
                         Intent intent = new Intent(MainActivity.this, MonthCalendar.class); // used to move to other activity
                         startActivity(intent);

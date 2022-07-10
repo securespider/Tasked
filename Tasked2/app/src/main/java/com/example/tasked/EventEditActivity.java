@@ -40,10 +40,10 @@ public class EventEditActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
 
-        boolean isModify = getIntent().getExtras().getBoolean("isModify");
-        if (isModify) {
-            // TODO: Create function for calendar to be modified instead of only created
-        }
+//        boolean isModify = getIntent().getExtras().getBoolean("isModify");
+//        if (isModify) {
+//            // TODO: Create function for calendar to be modified instead of only created
+//        }
         initWidgets();
         setEventView();
     }
@@ -172,8 +172,8 @@ public class EventEditActivity extends AppCompatActivity
         }
     }
 
-    public void cancelEvent(View view) {
-        // TODO: either delete the event or return without doing anything
-        finish();
-    }
+//    public void cancelEvent(View view) {
+//        // TODO: either delete the event or return without doing anything
+//        finish();
+//    }
 }

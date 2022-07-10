@@ -52,10 +52,10 @@ public class Event
      * Child will be
      * @return
      */
-    public static Map<String, Map<String, String>> eventListToMap() {
-        Map<String, Map<String, String>> result = new HashMap<>();
+    public static Map<String, Map<String, Object>> listToMap() {
+        Map<String, Map<String, Object>> result = new HashMap<>();
         for (Event event: Event.eventsList) {
-            result.put(Integer.toString(event.hashCode()), event.eventToMap());
+            result.put(Integer.toString(event.hashCode()), event.toMap());
         }
         return result;
     }
@@ -66,8 +66,8 @@ public class Event
      *
      * @return
      */
-    public Map<String, String> eventToMap() {
-        Map<String, String> mapEvent = new HashMap<>();
+    public Map<String, Object> toMap() {
+        Map<String, Object> mapEvent = new HashMap<>();
         mapEvent.put("name", this.name);
         mapEvent.put("description", this.description);
         mapEvent.put("date", this.eventDate.toString());
@@ -98,12 +98,40 @@ public class Event
     private LocalDate eventDate;
     private LocalTime startEventTime, endEventTime;
 
+    // Constructor for when parameters are in String instead (eg. During event retrieval from firebase)
+    public Event(String name, String strEventDate, String strStartEventTime, String strEndEventTime, String description) {
+        this(name, stringToLocalDate(strEventDate), stringToLocalTime(strStartEventTime), stringToLocalTime(strEndEventTime), description);
+    }
+
+    // Default constructor given appropriate classes
     public Event(String name, LocalDate eventDate, LocalTime startEventTime, LocalTime endEventTime, String description) {
         this.name = name;
         this.eventDate = eventDate;
         this.startEventTime = startEventTime;
         this.endEventTime = endEventTime;
         this.description = description;
+    }
+
+    private static LocalDate stringToLocalDate(String strEventDate) {
+        String[] strDates = strEventDate.split("-");
+        int[] intDates = new int[3];
+
+        for (int counter = 0; counter < 3; counter++) {
+            int intDate = Integer.parseInt(strDates[counter]);
+            intDates[counter] = intDate;
+        }
+        return LocalDate.of(intDates[0], intDates[1], intDates[2]);
+    }
+
+    private static LocalTime stringToLocalTime(String strLocalTime) {
+        String[] strTime = strLocalTime.split(":");
+        int[] intTimes = new int[2];
+
+        for (int counter = 0; counter < 2; counter++) {
+            int intTime = Integer.parseInt(strTime[counter]);
+            intTimes[counter] = intTime;
+        }
+        return LocalTime.of(intTimes[0], intTimes[1]);
     }
 
     public String getName() {
