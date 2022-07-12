@@ -5,7 +5,10 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -35,6 +38,7 @@ import java.util.Calendar;
 public class CalendarUtils
 {
     public static LocalDate selectedDate;
+    public static final String PATH = "https://tasked-44a12-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
 
     public static String formattedDate(LocalDate date)
@@ -146,6 +150,8 @@ public class CalendarUtils
             selectedDate[1] - 1,
             selectedDate[2]).show();
     }
+
+
 
 //    public static Calendar localDateTimeToCalendar(LocalDate date, LocalTime time) {
 //        Calendar calendar = Calendar.getInstance();

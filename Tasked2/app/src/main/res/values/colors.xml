@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="tasked">#FFEACC</color>
     <color name="darkGray">#63666A</color>
+    <color name="darkerMustard">#A88905</color>
+    <color name="crimson">#A6CC1100</color>
 </resources>

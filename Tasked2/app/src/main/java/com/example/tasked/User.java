@@ -1,12 +1,12 @@
 package com.example.tasked;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,31 +22,34 @@ import java.util.Map;
 public class User {
 
     // There should only be one instance of a user
-    public static User user;
+    private static User user;
 
     // Constant
     public static DatabaseReference REF =
             FirebaseDatabase
-                    .getInstance("https://tasked-44a12-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getInstance(CalendarUtils.PATH)
                     .getReference("Users");
 
     // With these various attributes
-    public FirebaseUser currentUser;
-    public String uid;
+    private static FirebaseUser currentUser;
+    private static String uid;
+    private static String email;
 
-    private User(@NonNull FirebaseUser user) {
-        this.currentUser = user;
-        this.uid = user.getUid();
+
+    private User(@NonNull FirebaseUser user, String email) {
+        User.currentUser = user;
+        User.uid = user.getUid();
+        User.email = email;
     }
 
-    public static User of(FirebaseUser user) {
-        User.user = new User(user);
+    public static User of(FirebaseUser user, String email) {
+        User.user = new User(user, email);
         retrieveAllData();
         return User.user;
     }
 
     public static void retrieveAllData() {
-        REF.child(user.uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        REF.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Event> result = new ArrayList<>();
@@ -83,13 +86,13 @@ public class User {
         return events;
     }
 
-    public void addEvent(Event event) {
+    public static void addEvent(Event event) {
         Event.eventsList.add(event);
         Map<String, Object> map = event.toMap();
         REF.child(uid).child(String.valueOf(event.hashCode())).setValue(map);
     }
 
-    public void removeEvent(Event event) {
+    public static void removeEvent(Event event) {
         if (Event.eventsList.contains(event)) {
             Event.eventsList.remove(event);
             REF.child(uid).child(String.valueOf(event.hashCode())).removeValue();
@@ -97,44 +100,27 @@ public class User {
         }
     }
 
-//    public static boolean addEventToFirebase (Event event) {
-//        boolean[] result = new boolean[1];
-//        REF.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.hasChild(uid)){
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        REF.child("User")
-//                .setValue(event)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (!task.isSuccessful()) {
-//                            result[0] = true;
-//                        }
-//                    }
-//                });
-//        return result[0];
-//    }
+    public static void deleteUser(Context context, Runnable successAction) {
+        currentUser.delete().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(context, "Profile has been deleted", Toast.LENGTH_SHORT).show();
+                REF.child(uid).removeValue();
+                FirebaseAuth.getInstance().signOut();
+                successAction.run();
+            } else {
+                Toast.makeText(context, "Profile cannot be deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-    // Initialise the database with new list of events
-//                        User.REF.child(User.user.uid)
-//            .setValue(user)
-//                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//        @Override
-//        public void onComplete(@NonNull Task<Void> task) {
-//            if (!task.isSuccessful()) {
-//                Toast.makeText(RegisterAccount.this, "Authentication failed!",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    });
+    public static void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        currentUser = null;
+        uid = null;
+        email = null;
+    }
+
+    public static String getEmail() {
+        return email;
+    }
 }

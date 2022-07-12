@@ -1,21 +1,16 @@
 package com.example.tasked;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.time.LocalTime;
-import java.util.Calendar;
 
 /**
  * Class specified to the page for Event Activity creation.
@@ -83,30 +78,21 @@ public class EventEditActivity extends AppCompatActivity
         btnEndEventTime = findViewById(R.id.btnEndEventTimePicker);
 
         // set time button onclick actions
-        btnStartEventTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectTimeUtil(true);
-                setEventView();
-            }
+        btnStartEventTime.setOnClickListener(v -> {
+            selectTimeUtil(true);
+            setEventView();
         });
-        btnEndEventTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectTimeUtil(false);
-                setEventView();
-            }
+        btnEndEventTime.setOnClickListener(v -> {
+            selectTimeUtil(false);
+            setEventView();
         });
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Event.isModify) {
-                    User.user.removeEvent(Event.modifyEvent);
-                }
-                Event.isModify = false;
-                finish();
+        btnCancel.setOnClickListener(v -> {
+            if (Event.isModify) {
+                User.removeEvent(Event.modifyEvent);
             }
+            Event.isModify = false;
+            finish();
         });
 
     }
@@ -125,7 +111,6 @@ public class EventEditActivity extends AppCompatActivity
     /**
      * Assigned to onclick of the date button to change the date that is selected.
      *
-     * @param view
      */
     public void selectDate(View view) {
         CalendarUtils.selectDateDialog(this, this::setEventView);
@@ -139,19 +124,16 @@ public class EventEditActivity extends AppCompatActivity
      */
     private void selectTimeUtil(boolean isStartTime) {
 
-        TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                if (isStartTime) {
-                    startTime = LocalTime.of(hourOfDay, minute);
-                } else {
-                    endTime = LocalTime.of(hourOfDay, minute);
-                }
-                if (!isValidEndTime()) {
-                    Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
-                }
-                setEventView();
+        TimePickerDialog.OnTimeSetListener listener = (view, hourOfDay, minute) -> {
+            if (isStartTime) {
+                startTime = LocalTime.of(hourOfDay, minute);
+            } else {
+                endTime = LocalTime.of(hourOfDay, minute);
             }
+            if (!isValidEndTime()) {
+                Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();
+            }
+            setEventView();
         };
 
         LocalTime time;
@@ -185,18 +167,17 @@ public class EventEditActivity extends AppCompatActivity
     /**
      * Onclick method for saving this event
      *
-     * @param view
      */
     public void saveEventAction(View view) {
         if (isValidEndTime()) {
             if (Event.isModify) {
-                User.user.removeEvent(Event.modifyEvent);
+                User.removeEvent(Event.modifyEvent);
                 Event.isModify = false;
             }
             String eventName = etEventName.getText().toString();
             String description = etEventDescription.getText().toString();
             this.event = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description);
-            User.user.addEvent(this.event);
+            User.addEvent(this.event);
             finish(); // does not go to the new date but the date that was previously selected
         } else {
             Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();

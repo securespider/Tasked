@@ -16,12 +16,36 @@ import java.util.Objects;
 public class Event implements Comparable<Event> {
     public static ArrayList<Event> eventsList = new ArrayList<>();
 
+    /**
+     * Returns a boolean value if there is an event on this date.
+     *
+     * Used in Calendars to show busy dates
+     *
+     * @param date Date to check
+     * @return Boolean value if there is an event on this date.
+     */
+    public static boolean isEventOnDate(LocalDate date) {
+        for (Event event : eventsList) {
+            if (event.getEventDate().equals(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Return a list of events happening on that date
+     *
+     * Used for Weekly view calendar
+     *
+     * @param date Date to check
+     * @return list of events happening on the date
+     */
     public static ArrayList<Event> eventsForDate(LocalDate date)
     {
         ArrayList<Event> events = new ArrayList<>();
 
-        for(Event event : eventsList)
-        {
+        for(Event event : eventsList) {
             if(event.getEventDate().equals(date))
                 events.add(event);
         }

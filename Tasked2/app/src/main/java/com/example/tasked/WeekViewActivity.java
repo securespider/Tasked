@@ -1,28 +1,21 @@
 package com.example.tasked;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static com.example.tasked.CalendarUtils.daysInWeekArray;
+import static com.example.tasked.CalendarUtils.monthYearFromDate;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import static com.example.tasked.CalendarUtils.daysInMonthArray;
-import static com.example.tasked.CalendarUtils.daysInWeekArray;
-import static com.example.tasked.CalendarUtils.monthYearFromDate;
-import static com.example.tasked.CalendarUtils.selectDateDialog;
-import static com.example.tasked.CalendarUtils.selectedDate;
 
 public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
 {
@@ -95,15 +88,12 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
         eventListView.setAdapter(eventAdapter);
 
-        eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Event chosenEvent = eventAdapter.getItem(position);
-                Event.isModify = true;
-                Event.modifyEvent = chosenEvent;
-                Log.v("onclickListener", "listener created in weekview");
-                startActivity(new Intent(WeekViewActivity.this, EventEditActivity.class));
-            }
+        eventListView.setOnItemClickListener((parent, view, position, id) -> {
+            Event chosenEvent = eventAdapter.getItem(position);
+            Event.isModify = true;
+            Event.modifyEvent = chosenEvent;
+            Log.v("onclickListener", "listener created in weekview");
+            startActivity(new Intent(WeekViewActivity.this, EventEditActivity.class));
         });
     }
 
@@ -113,8 +103,11 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         startActivity(intent);
     }
 
-    public void dailyAction(View view)
-    {
+    public void dailyAction(View view) {
         startActivity(new Intent(WeekViewActivity.this, DailyCalendarActivity.class));
+    }
+
+    public void profileAction(View view) {
+        startActivity(new Intent(WeekViewActivity.this, Profile.class));
     }
 }

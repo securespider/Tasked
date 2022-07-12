@@ -1,22 +1,20 @@
 package com.example.tasked;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static com.example.tasked.CalendarUtils.daysInMonthArray;
+import static com.example.tasked.CalendarUtils.monthYearFromDate;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import static com.example.tasked.CalendarUtils.daysInMonthArray;
-import static com.example.tasked.CalendarUtils.monthYearFromDate;
 
 /**
  * Used to show the month in its widest view
@@ -24,7 +22,6 @@ import static com.example.tasked.CalendarUtils.monthYearFromDate;
 public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.OnItemListener
 {
     private Button monthYearText;
-    private DatePickerDialog datePicker;
     private RecyclerView calendarRecyclerView;
 
 
@@ -36,6 +33,26 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
         initWidgets();
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MonthCalendar.this);
+
+        //Setting message manually and performing action on button click
+        builder.setMessage("You are about to logout. Do you wish to continue?")
+                .setCancelable(false)
+                .setPositiveButton("Cancel", (dialog, id) -> dialog.cancel())
+                .setNegativeButton("Logout", (dialog, id) -> {
+                    //  Logout activities
+                    User.logoutUser();
+                    finish();
+                });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.setTitle("Logout");
+        alert.show();
     }
 
     private void initWidgets()
@@ -82,9 +99,12 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
         }
     }
 
-    public void weeklyAction(View view)
-    {
-        startActivity(new Intent(this, WeekViewActivity.class));
+    public void weeklyAction(View view) {
+        startActivity(new Intent(MonthCalendar.this, WeekViewActivity.class));
+    }
+
+    public void profileAction(View view) {
+        startActivity(new Intent(MonthCalendar.this, Profile.class));
     }
 }
 

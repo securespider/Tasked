@@ -8,4 +8,7 @@
     <string name="incorrectPass">Your app has been locked, please contact an administrator or reset your password</string>
     <string name="createAccount">Create a new account</string>
     <string name="forgetPass">Forget password</string>
+    <string name="changePass">Reset your password</string>
+    <string name="profile">Profile</string>
+
 </resources>
