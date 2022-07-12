@@ -92,11 +92,20 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
     @Override
     public void onItemClick(int position, LocalDate date)
     {
-        if(date != null)
-        {
+        if (date != null) {
             CalendarUtils.selectedDate = date;
             setMonthView();
         }
+    }
+
+    @Override
+    public boolean onLongItemClick(int position, LocalDate date) {
+        if (date != null) {
+            CalendarUtils.selectedDate = date;
+            startActivity(new Intent(MonthCalendar.this, EventEditActivity.class));
+            setMonthView();
+        }
+        return true;
     }
 
     public void weeklyAction(View view) {

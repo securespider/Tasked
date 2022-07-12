@@ -17,8 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
-{
+public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
     private Button monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
@@ -71,8 +70,20 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     @Override
     public void onItemClick(int position, LocalDate date)
     {
-        CalendarUtils.selectedDate = date;
-        setWeekView();
+        if (date != null) {
+            CalendarUtils.selectedDate = date;
+            setWeekView();
+        }
+    }
+
+    @Override
+    public boolean onLongItemClick(int position, LocalDate date) {
+        if (date != null) {
+            CalendarUtils.selectedDate = date;
+            startActivity(new Intent(WeekViewActivity.this, EventEditActivity.class));
+            setWeekView();
+        }
+        return true;
     }
 
     @Override
@@ -82,8 +93,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         setEventAdapter();
     }
 
-    private void setEventAdapter()
-    {
+    private void setEventAdapter() {
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
         EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
         eventListView.setAdapter(eventAdapter);
