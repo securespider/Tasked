@@ -158,9 +158,12 @@ public class EventEditActivity extends AppCompatActivity
      * Method to refresh all text boxes to show updated values.
      */
     public void setEventView() {
-        btnEventDate.setText("Date: " + CalendarUtils.formattedDate(CalendarUtils.selectedDate));
-        btnStartEventTime.setText("From: " + CalendarUtils.formattedShortTime(startTime));
-        btnEndEventTime.setText("To: " + CalendarUtils.formattedShortTime(endTime));
+        String strDate = "Date: " + CalendarUtils.formattedDate(CalendarUtils.selectedDate);
+        String strStart = "From: " + CalendarUtils.formattedShortTime(startTime);
+        String strEnd = "To: " + CalendarUtils.formattedShortTime(endTime);
+        btnEventDate.setText(strDate);
+        btnStartEventTime.setText(strStart);
+        btnEndEventTime.setText(strEnd);
     }
 
 
