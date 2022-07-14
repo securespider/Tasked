@@ -1,7 +1,6 @@
 package com.example.tasked;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -25,10 +23,7 @@ public class User {
     private static User user;
 
     // Constant
-    public static DatabaseReference REF =
-            FirebaseDatabase
-                    .getInstance(CalendarUtils.PATH)
-                    .getReference("Users");
+    public static DatabaseReference REF = CalendarUtils.DB.getReference("Users");
 
     // With these various attributes
     private static FirebaseUser currentUser;
@@ -81,7 +76,6 @@ public class User {
             String description = fields.get("description");
             Event event = new Event(name, date, startTime, endTime, description);
             events.add(event);
-            Log.v("entry", name + " added");
         }
         return events;
     }
@@ -96,7 +90,6 @@ public class User {
         if (Event.eventsList.contains(event)) {
             Event.eventsList.remove(event);
             REF.child(uid).child(String.valueOf(event.hashCode())).removeValue();
-            Log.v("Event", "event deleted " + event.getName());
         }
     }
 

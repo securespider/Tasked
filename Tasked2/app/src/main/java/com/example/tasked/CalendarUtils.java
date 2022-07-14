@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,10 +13,9 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class CalendarUtils
-{
+public class CalendarUtils {
     public static LocalDate selectedDate;
-    public static final String PATH = "https://tasked-44a12-default-rtdb.asia-southeast1.firebasedatabase.app/";
+    public static FirebaseDatabase DB;
 
 
     public static String formattedDate(LocalDate date)

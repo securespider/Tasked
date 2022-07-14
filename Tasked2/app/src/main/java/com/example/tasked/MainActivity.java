@@ -24,9 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class MainActivity extends AppCompatActivity {
 
-    // Firebase declaration
-    private FirebaseAuth mAuth;
-
 
     
     // Widget declarations
@@ -42,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseDatabase.getInstance(CalendarUtils.PATH).setPersistenceEnabled(true);
         initWidgets();
     }
 
@@ -53,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWidgets() {
-        mAuth = FirebaseAuth.getInstance();
 
         email = (EditText) findViewById(R.id.etName);
         password = (EditText) findViewById(R.id.etPassword);
@@ -103,26 +98,32 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        if (!isOnline()) {
+            Toast.makeText(MainActivity.this, NOCONNECTION, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         mAuth.signInWithEmailAndPassword(strEmail, strPassword)
                 .addOnCompleteListener(MainActivity.this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
+                        if (CalendarUtils.DB == null) {
+                            CalendarUtils.DB = FirebaseDatabase.getInstance("https://tasked-44a12-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                            CalendarUtils.DB.setPersistenceEnabled(true);
+                        }
                         User.of(mAuth.getCurrentUser(), strEmail);
 
                         Intent intent = new Intent(MainActivity.this, MonthCalendar.class); // used to move to other activity
                         startActivity(intent);
                     } else {
-                        if (!isOnline()) {
-                            Toast.makeText(MainActivity.this, NOCONNECTION, Toast.LENGTH_SHORT).show();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, WRONGPASSWORD, Toast.LENGTH_SHORT).show();
-                            if (--attemptsLeft == 0) {
-                                login.setEnabled((false));
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(MainActivity.this, WRONGPASSWORD, Toast.LENGTH_SHORT).show();
+                        if (--attemptsLeft == 0) {
+                            login.setEnabled((false));
 
-                                // message saying that maximum attempts limit has been reached
-                                errorMessage.setVisibility(View.VISIBLE);
-                            }
+                            // message saying that maximum attempts limit has been reached
+                            errorMessage.setVisibility(View.VISIBLE);
                         }
                     }
                 });

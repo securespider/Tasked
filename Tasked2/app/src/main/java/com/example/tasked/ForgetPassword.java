@@ -59,9 +59,9 @@ public class ForgetPassword extends AppCompatActivity {
         auth.sendPasswordResetEmail(strEmail)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), SUCCESS, Toast.LENGTH_SHORT).show();
                         User.logoutUser();
                         startActivity(new Intent(ForgetPassword.this, MainActivity.class));
+                        Toast.makeText(getApplicationContext(), SUCCESS, Toast.LENGTH_SHORT).show();
                     } else {
                         if (!isOnline()) {
                             Toast.makeText(getApplicationContext(), NOCONNECTION, Toast.LENGTH_SHORT).show();
