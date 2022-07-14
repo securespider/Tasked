@@ -14,23 +14,4 @@ class  HourEvent
         this.events = events;
     }
 
-    public LocalTime getTime()
-    {
-        return time;
-    }
-
-    public void setTime(LocalTime time)
-    {
-        this.time = time;
-    }
-
-    public ArrayList<Event> getEvents()
-    {
-        return events;
-    }
-
-    public void setEvents(ArrayList<Event> events)
-    {
-        this.events = events;
-    }
 }

@@ -1,10 +1,5 @@
 package com.example.tasked;
 
-import android.content.Intent;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -73,7 +68,6 @@ public class Event implements Comparable<Event> {
     /**
      * Utility function to convert EventList into map for easy addition into database
      *
-     * @return
      */
     public static Map<String, Map<String, Object>> listToMap() {
         Map<String, Map<String, Object>> result = new HashMap<>();
@@ -87,7 +81,6 @@ public class Event implements Comparable<Event> {
     /**
      * Utility function to convert individual events to map.
      *
-     * @return
      */
     public Map<String, Object> toMap() {
         Map<String, Object> mapEvent = new HashMap<>();
@@ -120,9 +113,9 @@ public class Event implements Comparable<Event> {
     public static boolean isModify = false;
     public static Event modifyEvent;
 
-    private String name, description;
-    private LocalDate eventDate;
-    private LocalTime startEventTime, endEventTime;
+    private final String name, description;
+    private final LocalDate eventDate;
+    private final LocalTime startEventTime, endEventTime;
 
     // Constructor for when parameters are in String instead (eg. During event retrieval from firebase)
     public Event(String name, String strEventDate, String strStartEventTime, String strEndEventTime, String description) {
@@ -172,24 +165,14 @@ public class Event implements Comparable<Event> {
         return eventDate;
     }
 
-    public void setEventDate(LocalDate eventDate) {
-        this.eventDate = eventDate;
-    }
 
     public LocalTime getStartEventTime() {
         return startEventTime;
     }
 
-    public void setStartEventTime(LocalTime startEventTime) {
-        this.startEventTime = startEventTime;
-    }
 
     public LocalTime getEndEventTime() {
         return endEventTime;
-    }
-
-    public void setEndEventTime(LocalTime endEventTime) {
-        this.endEventTime = endEventTime;
     }
 
     @Override
