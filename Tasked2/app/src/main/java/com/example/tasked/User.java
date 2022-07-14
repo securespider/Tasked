@@ -74,7 +74,8 @@ public class User {
             String startTime = fields.get("startTime");
             String endTime = fields.get("endTime");
             String description = fields.get("description");
-            Event event = new Event(name, date, startTime, endTime, description);
+            String notif = fields.get("notification");
+            Event event = new Event(name, date, startTime, endTime, description, notif == null ? "" : notif);
             events.add(event);
         }
         return events;
@@ -84,10 +85,13 @@ public class User {
         Event.eventsList.add(event);
         Map<String, Object> map = event.toMap();
         REF.child(uid).child(String.valueOf(event.hashCode())).setValue(map);
-        NotificationUtils notif = new NotificationUtils(context);
-        long notifTime = CalendarUtils  .localDateTimeToCalendar(event.getEventDate(), event.getStartEventTime())
-                                        .getTimeInMillis();
-        notif.setReminder(notifTime, event.getName(), "Your event is starting soon!", event.hashCode());
+
+        if (event.isNotif()) {
+            NotificationUtils notif = new NotificationUtils(context);
+            long notifTime = CalendarUtils.localDateTimeToCalendar(event.getEventDate(), event.getStartEventTime())
+                    .getTimeInMillis();
+            notif.setReminder(notifTime, event.getName(), "Your event is starting soon!", event.hashCode());
+        }
     }
 
     public static void removeEvent(Event event) {

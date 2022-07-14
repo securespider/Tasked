@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ public class EventEditActivity extends AppCompatActivity
     Event event;
     private EditText etEventName, etEventDescription;
     private Button btnEventDate, btnStartEventTime, btnEndEventTime, btnCancel;
+    private CheckBox cbNotif;
 
     private LocalTime startTime, endTime;
 
@@ -54,6 +56,7 @@ public class EventEditActivity extends AppCompatActivity
         etEventName.setText(this.event.getName(), TextView.BufferType.EDITABLE);
         etEventDescription.setText(this.event.getDescription(), TextView.BufferType.EDITABLE);
         btnCancel.setText((CharSequence) "Delete");
+        cbNotif.setChecked(event.isNotif());
     }
 
     private void initNewEvent() {
@@ -72,6 +75,7 @@ public class EventEditActivity extends AppCompatActivity
         etEventDescription = findViewById(R.id.etEventDescription);
         btnEventDate = findViewById(R.id.btnEventDatePicker);
         btnCancel = findViewById(R.id.btnCancel);
+        cbNotif = findViewById(R.id.cbNotif);
 
         // set default time interval
         btnStartEventTime = findViewById(R.id.btnStartEventTimePicker);
@@ -179,7 +183,7 @@ public class EventEditActivity extends AppCompatActivity
             }
             String eventName = etEventName.getText().toString();
             String description = etEventDescription.getText().toString();
-            this.event = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description);
+            this.event = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description, cbNotif.isChecked());
             User.addEvent(this.event, EventEditActivity.this);
             finish(); // does not go to the new date but the date that was previously selected
         } else {

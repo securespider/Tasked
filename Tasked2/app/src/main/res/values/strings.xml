@@ -10,5 +10,6 @@
     <string name="forgetPass">Forget password</string>
     <string name="changePass">Reset your password</string>
     <string name="profile">Profile</string>
+    <string name="notif">Receive notification in advance</string>
 
 </resources>

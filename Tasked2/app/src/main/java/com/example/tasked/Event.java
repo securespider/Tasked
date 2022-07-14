@@ -89,6 +89,7 @@ public class Event implements Comparable<Event> {
         mapEvent.put("date", this.eventDate.toString());
         mapEvent.put("startTime", this.startEventTime.toString());
         mapEvent.put("endTime", this.endEventTime.toString());
+        mapEvent.put("notif", Boolean.toString(this.notif));
         return mapEvent;
     }
 
@@ -113,22 +114,24 @@ public class Event implements Comparable<Event> {
     public static boolean isModify = false;
     public static Event modifyEvent;
 
+    private boolean notif;
     private final String name, description;
     private final LocalDate eventDate;
     private final LocalTime startEventTime, endEventTime;
 
     // Constructor for when parameters are in String instead (eg. During event retrieval from firebase)
-    public Event(String name, String strEventDate, String strStartEventTime, String strEndEventTime, String description) {
-        this(name, stringToLocalDate(strEventDate), stringToLocalTime(strStartEventTime), stringToLocalTime(strEndEventTime), description);
+    public Event(String name, String strEventDate, String strStartEventTime, String strEndEventTime, String description, String notif) {
+        this(name, stringToLocalDate(strEventDate), stringToLocalTime(strStartEventTime), stringToLocalTime(strEndEventTime), description, notif.equals("true"));
     }
 
     // Default constructor given appropriate classes
-    public Event(String name, LocalDate eventDate, LocalTime startEventTime, LocalTime endEventTime, String description) {
+    public Event(String name, LocalDate eventDate, LocalTime startEventTime, LocalTime endEventTime, String description, boolean notif) {
         this.name = name;
         this.eventDate = eventDate;
         this.startEventTime = startEventTime;
         this.endEventTime = endEventTime;
         this.description = description;
+        this.notif = notif;
     }
 
     private static LocalDate stringToLocalDate(String strEventDate) {
@@ -173,6 +176,10 @@ public class Event implements Comparable<Event> {
 
     public LocalTime getEndEventTime() {
         return endEventTime;
+    }
+
+    public boolean isNotif() {
+        return notif;
     }
 
     @Override
