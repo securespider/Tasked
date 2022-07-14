@@ -180,7 +180,7 @@ public class EventEditActivity extends AppCompatActivity
             String eventName = etEventName.getText().toString();
             String description = etEventDescription.getText().toString();
             this.event = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description);
-            User.addEvent(this.event);
+            User.addEvent(this.event, EventEditActivity.this);
             finish(); // does not go to the new date but the date that was previously selected
         } else {
             Toast.makeText(getApplicationContext(), INVALIDTIME, Toast.LENGTH_SHORT).show();

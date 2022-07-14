@@ -80,10 +80,14 @@ public class User {
         return events;
     }
 
-    public static void addEvent(Event event) {
+    public static void addEvent(Event event, Context context) {
         Event.eventsList.add(event);
         Map<String, Object> map = event.toMap();
         REF.child(uid).child(String.valueOf(event.hashCode())).setValue(map);
+        NotificationUtils notif = new NotificationUtils(context);
+        long notifTime = CalendarUtils  .localDateTimeToCalendar(event.getEventDate(), event.getStartEventTime())
+                                        .getTimeInMillis();
+        notif.setReminder(notifTime, event.getName(), "Your event is starting soon!", event.hashCode());
     }
 
     public static void removeEvent(Event event) {
