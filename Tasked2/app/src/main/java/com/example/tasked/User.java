@@ -85,19 +85,16 @@ public class User {
         Event.eventsList.add(event);
         Map<String, Object> map = event.toMap();
         REF.child(uid).child(String.valueOf(event.hashCode())).setValue(map);
-
-        if (event.isNotif()) {
-            NotificationUtils notif = new NotificationUtils(context);
-            long notifTime = CalendarUtils.localDateTimeToCalendar(event.getEventDate(), event.getStartEventTime())
-                    .getTimeInMillis();
-            notif.setReminder(notifTime, event.getName(), "Your event is starting soon!", event.hashCode());
-        }
+        event.setReminder(context, false);
     }
 
-    public static void removeEvent(Event event) {
+    public static void removeEvent(Event event, Context context) {
         if (Event.eventsList.contains(event)) {
             Event.eventsList.remove(event);
             REF.child(uid).child(String.valueOf(event.hashCode())).removeValue();
+            if (event.isNotif()) {
+                event.setReminder(context, true);
+            }
         }
     }
 

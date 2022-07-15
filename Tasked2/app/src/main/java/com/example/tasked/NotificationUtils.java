@@ -52,16 +52,19 @@ public class NotificationUtils extends ContextWrapper {
         return notificationManager;
     }
 
-    public void setReminder(long timeInMillis, String title, String body, int code) {
+    public void setReminder(long timeInMillis, String title, String body, int code, boolean delete) {
         Intent intent = new Intent(context, ReminderBroadcast.class);
         intent.putExtra("title", title);
         intent.putExtra("body", body);
         intent.putExtra("code", code);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+        if (!delete) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+        } else {
+            pendingIntent.cancel();
+        }
     }
 
 }

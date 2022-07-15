@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Connect same events
 public class HourAdapter extends ArrayAdapter<HourEvent>
 {
     public HourAdapter(@NonNull Context context, List<HourEvent> hourEvents)

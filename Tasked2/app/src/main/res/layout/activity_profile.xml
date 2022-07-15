@@ -30,38 +30,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Profile Settings"
+            android:text="User Settings"
             android:textColor="@color/black"
             android:textSize="30sp" />
-
-
-
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="3dip"
             android:layout_margin="10dp"
             android:background="@color/gray" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="Delete Profile"
-            android:onClick="deleteProfileAction"
-            android:textSize="15sp"
-            android:background="@drawable/btn_shape_warning" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="User Settings"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,22 +64,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:text="Password"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,6 +81,35 @@
             android:text="Logout"
             android:onClick="logoutAction"
             android:textSize="15sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Profile Settings"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="3dip"
+            android:layout_margin="10dp"
+            android:background="@color/gray" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:text="Delete Profile"
+            android:onClick="deleteProfileAction"
+            android:textSize="15sp"
+            android:background="@drawable/btn_shape_warning" />
+
 
     </LinearLayout>
 

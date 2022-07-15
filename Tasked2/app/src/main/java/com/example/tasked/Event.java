@@ -1,5 +1,7 @@
 package com.example.tasked;
 
+import android.content.Context;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -180,6 +182,15 @@ public class Event implements Comparable<Event> {
 
     public boolean isNotif() {
         return notif;
+    }
+
+    public void setReminder(Context context, boolean isDelete) {
+        if (this.notif) {
+            NotificationUtils notif = new NotificationUtils(context);
+            long notifTime = CalendarUtils.localDateTimeToCalendar(this.eventDate, this.startEventTime)
+                    .getTimeInMillis();
+            notif.setReminder(notifTime, this.name, "Your event is starting soon!", this.hashCode(), isDelete);
+        }
     }
 
     @Override

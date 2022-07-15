@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.LocalTime;
+import java.util.Calendar;
 
 /**
  * Class specified to the page for Event Activity creation.
@@ -93,11 +94,21 @@ public class EventEditActivity extends AppCompatActivity
 
         btnCancel.setOnClickListener(v -> {
             if (Event.isModify) {
-                User.removeEvent(Event.modifyEvent);
+                User.removeEvent(Event.modifyEvent, EventEditActivity.this);
             }
             Event.isModify = false;
             finish();
         });
+
+
+        cbNotif.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            if (!isChecked)
+                return;
+            if (Calendar.getInstance().after(CalendarUtils.localDateTimeToCalendar(CalendarUtils.selectedDate, startTime))) {
+                Toast.makeText(EventEditActivity.this, "Event has already passed", Toast.LENGTH_SHORT).show();
+                cbNotif.setChecked(false);
+            }
+        }));
 
     }
 
@@ -178,7 +189,7 @@ public class EventEditActivity extends AppCompatActivity
     public void saveEventAction(View view) {
         if (isValidEndTime()) {
             if (Event.isModify) {
-                User.removeEvent(Event.modifyEvent);
+                User.removeEvent(Event.modifyEvent, EventEditActivity.this);
                 Event.isModify = false;
             }
             String eventName = etEventName.getText().toString();
