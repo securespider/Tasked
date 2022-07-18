@@ -24,6 +24,11 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
     private Button monthYearText;
     private RecyclerView calendarRecyclerView;
 
+    @Override
+    protected void onResume() {
+        setMonthView();
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

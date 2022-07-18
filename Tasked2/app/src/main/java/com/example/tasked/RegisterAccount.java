@@ -96,6 +96,7 @@ public class RegisterAccount extends AppCompatActivity {
                         if (CalendarUtils.DB == null) {
                             CalendarUtils.DB = FirebaseDatabase.getInstance("https://tasked-44a12-default-rtdb.asia-southeast1.firebasedatabase.app/");
                             CalendarUtils.DB.setPersistenceEnabled(true);
+                            
                         }
                         User.of(mAuth.getCurrentUser(), strEmail);
                         Toast.makeText(getApplicationContext(), "Account created.",

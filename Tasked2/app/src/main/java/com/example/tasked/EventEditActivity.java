@@ -29,6 +29,7 @@ public class EventEditActivity extends AppCompatActivity
     private EditText etEventName, etEventDescription;
     private Button btnEventDate, btnStartEventTime, btnEndEventTime, btnCancel;
     private CheckBox cbNotif;
+    private String color = "red";
 
     private LocalTime startTime, endTime;
 
@@ -194,7 +195,7 @@ public class EventEditActivity extends AppCompatActivity
             }
             String eventName = etEventName.getText().toString();
             String description = etEventDescription.getText().toString();
-            this.event = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description, cbNotif.isChecked());
+            this.event = new Event(eventName, CalendarUtils.selectedDate, startTime, endTime, description, cbNotif.isChecked(), color);
             User.addEvent(this.event, EventEditActivity.this);
             finish(); // does not go to the new date but the date that was previously selected
         } else {

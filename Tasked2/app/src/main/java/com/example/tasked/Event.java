@@ -80,21 +80,6 @@ public class Event implements Comparable<Event> {
     }
 
 
-    /**
-     * Utility function to convert individual events to map.
-     *
-     */
-    public Map<String, Object> toMap() {
-        Map<String, Object> mapEvent = new HashMap<>();
-        mapEvent.put("name", this.name);
-        mapEvent.put("description", this.description);
-        mapEvent.put("date", this.eventDate.toString());
-        mapEvent.put("startTime", this.startEventTime.toString());
-        mapEvent.put("endTime", this.endEventTime.toString());
-        mapEvent.put("notif", Boolean.toString(this.notif));
-        return mapEvent;
-    }
-
 //    /**
 //     * Util function that is used to convert map back to ArrayList for events.
 //     *
@@ -116,25 +101,65 @@ public class Event implements Comparable<Event> {
     public static boolean isModify = false;
     public static Event modifyEvent;
 
+
+    private static final String[] FIELDS = new String[]{
+            "name",
+            "date",
+            "startTime",
+            "endTime",
+            "description",
+            "notif",
+            "color"
+    };
+
     private boolean notif;
     private final String name, description;
     private final LocalDate eventDate;
     private final LocalTime startEventTime, endEventTime;
+    private final String color;
+
+    public Event(Map<String, String> fields) {
+        this(   fields.get(FIELDS[0]),
+                fields.get(FIELDS[1]),
+                fields.get(FIELDS[2]),
+                fields.get(FIELDS[3]),
+                fields.get(FIELDS[4]),
+                fields.get(FIELDS[5]) == null ? "" : fields.get(FIELDS[5]),
+                fields.get(FIELDS[6]));
+    }
 
     // Constructor for when parameters are in String instead (eg. During event retrieval from firebase)
-    public Event(String name, String strEventDate, String strStartEventTime, String strEndEventTime, String description, String notif) {
-        this(name, stringToLocalDate(strEventDate), stringToLocalTime(strStartEventTime), stringToLocalTime(strEndEventTime), description, notif.equals("true"));
+    public Event(String name, String strEventDate, String strStartEventTime, String strEndEventTime, String description, String notif, String color) {
+        this(name, stringToLocalDate(strEventDate), stringToLocalTime(strStartEventTime), stringToLocalTime(strEndEventTime), description, notif.equals("true"), color);
     }
 
     // Default constructor given appropriate classes
-    public Event(String name, LocalDate eventDate, LocalTime startEventTime, LocalTime endEventTime, String description, boolean notif) {
+    public Event(String name, LocalDate eventDate, LocalTime startEventTime, LocalTime endEventTime, String description, boolean notif, String color) {
         this.name = name;
         this.eventDate = eventDate;
         this.startEventTime = startEventTime;
         this.endEventTime = endEventTime;
         this.description = description;
         this.notif = notif;
+        this.color = color;
     }
+
+    /**
+     * Utility function to convert individual events to map.
+     *
+     */
+    public Map<String, Object> toMap() {
+        Map<String, Object> mapEvent = new HashMap<>();
+        mapEvent.put(FIELDS[0], this.name);
+        mapEvent.put(FIELDS[1], this.eventDate.toString());
+        mapEvent.put(FIELDS[2], this.startEventTime.toString());
+        mapEvent.put(FIELDS[3], this.endEventTime.toString());
+        mapEvent.put(FIELDS[4], this.description);
+        mapEvent.put(FIELDS[5], Boolean.toString(this.notif));
+        mapEvent.put(FIELDS[6], color);
+        return mapEvent;
+    }
+
 
     private static LocalDate stringToLocalDate(String strEventDate) {
         String[] strDates = strEventDate.split("-");

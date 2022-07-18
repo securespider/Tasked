@@ -23,7 +23,7 @@ public class User {
     private static User user;
 
     // Constant
-    public static DatabaseReference REF = CalendarUtils.DB.getReference("Users");
+    private static DatabaseReference REF;
 
     // With these various attributes
     private static FirebaseUser currentUser;
@@ -35,6 +35,7 @@ public class User {
         User.currentUser = user;
         User.uid = user.getUid();
         User.email = email;
+        REF = CalendarUtils.DB.getReference("Users").child(uid);
     }
 
     public static User of(FirebaseUser user, String email) {
@@ -44,7 +45,8 @@ public class User {
     }
 
     public static void retrieveAllData() {
-        REF.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        REF.keepSynced(true);
+        REF.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Event> result = new ArrayList<>();
@@ -61,6 +63,7 @@ public class User {
                 Event.eventsList = new ArrayList<>();
             }
         });
+        REF.keepSynced(false);
     }
     private static ArrayList<Event> collectEvents(Map<String, Map<String, String>> eventList) {
         if (eventList == null) {
@@ -69,13 +72,7 @@ public class User {
         ArrayList<Event> events = new ArrayList<>();
         for (Map.Entry<String, Map<String,String>> entry: eventList.entrySet()) {
             Map<String, String> fields = entry.getValue();
-            String name = fields.get("name");
-            String date = fields.get("date");
-            String startTime = fields.get("startTime");
-            String endTime = fields.get("endTime");
-            String description = fields.get("description");
-            String notif = fields.get("notification");
-            Event event = new Event(name, date, startTime, endTime, description, notif == null ? "" : notif);
+            Event event = new Event(fields);
             events.add(event);
         }
         return events;
@@ -84,14 +81,14 @@ public class User {
     public static void addEvent(Event event, Context context) {
         Event.eventsList.add(event);
         Map<String, Object> map = event.toMap();
-        REF.child(uid).child(String.valueOf(event.hashCode())).setValue(map);
+        REF.child(String.valueOf(event.hashCode())).setValue(map);
         event.setReminder(context, false);
     }
 
     public static void removeEvent(Event event, Context context) {
         if (Event.eventsList.contains(event)) {
             Event.eventsList.remove(event);
-            REF.child(uid).child(String.valueOf(event.hashCode())).removeValue();
+            REF.child(String.valueOf(event.hashCode())).removeValue();
             if (event.isNotif()) {
                 event.setReminder(context, true);
             }
@@ -102,7 +99,7 @@ public class User {
         currentUser.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(context, "Profile has been deleted", Toast.LENGTH_SHORT).show();
-                REF.child(uid).removeValue();
+                REF.removeValue();
                 FirebaseAuth.getInstance().signOut();
                 successAction.run();
             } else {

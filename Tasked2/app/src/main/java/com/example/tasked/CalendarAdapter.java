@@ -48,8 +48,10 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         if(date.equals(CalendarUtils.selectedDate))
             holder.parentView.setBackgroundColor(Color.LTGRAY);
 
-        if (isEventOnDate)
+        if (isEventOnDate) {
             holder.parentView.setBackgroundColor(Color.parseColor("#FFFFC2"));
+            holder.parentView.findViewById(R.id.imgEventCat2).setVisibility(View.VISIBLE);
+        }
 
         if (isEventOnDate && date.equals(CalendarUtils.selectedDate))
             holder.parentView.setBackgroundColor(Color.parseColor("#FFF3A1"));

@@ -89,8 +89,8 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     @Override
     protected void onResume()
     {
+        setWeekView();
         super.onResume();
-        setEventAdapter();
     }
 
     private void setEventAdapter() {
