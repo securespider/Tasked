@@ -180,6 +180,10 @@ public class Event implements Comparable<Event> {
         return endEventTime;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public boolean isNotif() {
         return notif;
     }
