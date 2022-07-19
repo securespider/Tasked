@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Set;
 
 class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 {
@@ -41,20 +42,26 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position)
     {
         final LocalDate date = days.get(position);
-        boolean isEventOnDate = Event.isEventOnDate(date);
+        Set<String> eventCat = Event.eventCatForDate(date);
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
 
         if(date.equals(CalendarUtils.selectedDate))
             holder.parentView.setBackgroundColor(Color.LTGRAY);
 
-        if (isEventOnDate) {
+        if (!eventCat.isEmpty()) {
             holder.parentView.setBackgroundColor(Color.parseColor("#FFFFC2"));
-            holder.parentView.findViewById(R.id.imgEventCat2).setVisibility(View.VISIBLE);
+            if (date.equals(CalendarUtils.selectedDate))
+                holder.parentView.setBackgroundColor(Color.parseColor("#FFF3A1"));
+            if (eventCat.contains("red"))
+                holder.parentView.findViewById(R.id.imgEventRed).setVisibility(View.VISIBLE);
+            if (eventCat.contains("blue"))
+                holder.parentView.findViewById(R.id.imgEventBlue).setVisibility(View.VISIBLE);
+            if (eventCat.contains("green"))
+                holder.parentView.findViewById(R.id.imgEventGreen).setVisibility(View.VISIBLE);
         }
 
-        if (isEventOnDate && date.equals(CalendarUtils.selectedDate))
-            holder.parentView.setBackgroundColor(Color.parseColor("#FFF3A1"));
+
 
         if(date.getMonth().equals(CalendarUtils.selectedDate.getMonth()))
             holder.dayOfMonth.setTextColor(Color.BLACK);

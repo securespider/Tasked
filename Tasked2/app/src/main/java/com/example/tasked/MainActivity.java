@@ -43,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        email.setText("");
+        password.setText("");
+        super.onResume();
+    }
+
+    @Override
     public void onBackPressed() {
         finish();
         System.exit(0);

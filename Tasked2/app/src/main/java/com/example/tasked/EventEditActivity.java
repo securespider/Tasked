@@ -29,7 +29,7 @@ public class EventEditActivity extends AppCompatActivity
     private EditText etEventName, etEventDescription;
     private Button btnEventDate, btnStartEventTime, btnEndEventTime, btnCancel;
     private CheckBox cbNotif;
-    private String color = "red";
+    private String color = "green";
 
     private LocalTime startTime, endTime;
 
@@ -111,6 +111,12 @@ public class EventEditActivity extends AppCompatActivity
             }
         }));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Event.isModify = false;
+        super.onBackPressed();
     }
 
     /**

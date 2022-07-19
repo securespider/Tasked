@@ -7,28 +7,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class Event implements Comparable<Event> {
     public static ArrayList<Event> eventsList = new ArrayList<>();
-
-    /**
-     * Returns a boolean value if there is an event on this date.
-     *
-     * Used in Calendars to show busy dates
-     *
-     * @param date Date to check
-     * @return Boolean value if there is an event on this date.
-     */
-    public static boolean isEventOnDate(LocalDate date) {
-        for (Event event : eventsList) {
-            if (event.getEventDate().equals(date)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Return a list of events happening on that date
@@ -50,6 +35,25 @@ public class Event implements Comparable<Event> {
         return events;
     }
 
+    /**
+     * Return the set of event colors happening on that date
+     *
+     * Used for Weekly view calendar
+     *
+     * @param date Date to check
+     * @return Set of event colors happening on the date
+     */
+    public static Set<String> eventCatForDate(LocalDate date)
+    {
+        Set<String> events = new HashSet<>();
+
+        for(Event event : eventsList) {
+            if(event.getEventDate().equals(date))
+                events.add(event.color);
+        }
+        return events;
+    }
+
     public static ArrayList<Event> eventsForDateAndTime(LocalDate date, LocalTime time)
     {
         ArrayList<Event> events = new ArrayList<>();
@@ -67,35 +71,6 @@ public class Event implements Comparable<Event> {
         return events;
     }
 
-    /**
-     * Utility function to convert EventList into map for easy addition into database
-     *
-     */
-    public static Map<String, Map<String, Object>> listToMap() {
-        Map<String, Map<String, Object>> result = new HashMap<>();
-        for (Event event: Event.eventsList) {
-            result.put(Integer.toString(event.hashCode()), event.toMap());
-        }
-        return result;
-    }
-
-
-//    /**
-//     * Util function that is used to convert map back to ArrayList for events.
-//     *
-//     * @param event Event that is being converted to JSONObject
-//     * @return The JSONObject
-//     * @throws JSONException
-//     */
-//    public static ArrayList<Event> mapToEventList() {
-//        JSONObject result = new JSONObject();
-//        result.putOpt("name", event.name);
-//        result.putOpt("description", event.description);
-//        result.putOpt("date", event.eventDate);
-//        result.putOpt("startTime", event.startEventTime);
-//        result.putOpt("endTime", event.endEventTime);
-//        return result;
-//    }
 
     // Used to pass Events to be modified across activities
     public static boolean isModify = false;

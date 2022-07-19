@@ -31,30 +31,30 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/imgEventCat1"
+            android:id="@+id/imgEventRed"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:src="@drawable/simple_circle"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/red_simple_circle"
             android:visibility="invisible"/>
 
         <ImageView
-            android:id="@+id/imgEventCat2"
+            android:id="@+id/imgEventBlue"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:src="@drawable/simple_circle"
+            android:src="@drawable/blue_simple_circle"
             android:visibility="invisible"/>
 
 
         <ImageView
-            android:id="@+id/imgEventCat3"
+            android:id="@+id/imgEventGreen"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/simple_circle"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/green_simple_circle"
             android:visibility="invisible"/>
 
     </LinearLayout>
