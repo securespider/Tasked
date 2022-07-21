@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDate;
+
 /**
  * This is the login page and the first activity that the user will interact with.
  *
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     
     // Widget declarations
     private EditText email, password;
-    private Button login, forgetPassword, register;
+    private Button login;
     private TextView errorMessage;
     private static final CharSequence WRONGPASSWORD = "The email or password was incorrect.";
     private static final CharSequence NOCONNECTION = "There is no connection. Please connect to the internet and try again.";
@@ -60,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.etName);
         password = (EditText) findViewById(R.id.etPassword);
         login = (Button) findViewById(R.id.btnLogin);
-        register = (Button) findViewById(R.id.btnRegisterAccount);
-        forgetPassword = (Button) findViewById(R.id.btnForgetPassword);
+        Button register = (Button) findViewById(R.id.btnRegisterAccount);
+        Button forgetPassword = (Button) findViewById(R.id.btnForgetPassword);
         errorMessage = (TextView) findViewById(R.id.tvError);
 
         // Onclick methods for register and forgetPassword
@@ -136,8 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 });
         }
 
-    private void closeKeyboard(View view)
-    {
+    private void closeKeyboard(View view) {
         // if nothing is currently
         // focus then this will protect
         // the app from crash

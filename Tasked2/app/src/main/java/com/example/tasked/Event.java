@@ -1,5 +1,8 @@
 package com.example.tasked;
 
+import static com.example.tasked.CalendarUtils.stringToLocalDate;
+import static com.example.tasked.CalendarUtils.stringToLocalTime;
+
 import android.content.Context;
 
 import java.time.LocalDate;
@@ -136,27 +139,7 @@ public class Event implements Comparable<Event> {
     }
 
 
-    private static LocalDate stringToLocalDate(String strEventDate) {
-        String[] strDates = strEventDate.split("-");
-        int[] intDates = new int[3];
 
-        for (int counter = 0; counter < 3; counter++) {
-            int intDate = Integer.parseInt(strDates[counter]);
-            intDates[counter] = intDate;
-        }
-        return LocalDate.of(intDates[0], intDates[1], intDates[2]);
-    }
-
-    private static LocalTime stringToLocalTime(String strLocalTime) {
-        String[] strTime = strLocalTime.split(":");
-        int[] intTimes = new int[2];
-
-        for (int counter = 0; counter < 2; counter++) {
-            int intTime = Integer.parseInt(strTime[counter]);
-            intTimes[counter] = intTime;
-        }
-        return LocalTime.of(intTimes[0], intTimes[1]);
-    }
 
     public String getName() {
         return name;
@@ -213,5 +196,19 @@ public class Event implements Comparable<Event> {
     @Override
     public int compareTo(Event o) {
         return this.startEventTime.compareTo(o.startEventTime);
+    }
+
+    // Testing purposes
+    @Override
+    public String toString() {
+        return "Event{" +
+                "notif=" + notif +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", eventDate=" + eventDate +
+                ", startEventTime=" + startEventTime +
+                ", endEventTime=" + endEventTime +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

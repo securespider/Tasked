@@ -24,9 +24,10 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
     private Button monthYearText;
     private RecyclerView calendarRecyclerView;
 
+
     @Override
     protected void onResume() {
-        setMonthView();
+        refreshMonthView();
         super.onResume();
     }
 
@@ -68,17 +69,19 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
     }
 
     public void selectMonthAction(View view) {
-        CalendarUtils.selectDateDialog(this, this::setMonthView);
+        CalendarUtils.selectDateDialog(this, this::refreshMonthView);
     }
 
-    private void setMonthView()
-    {
+    private void setMonthView() {
+        refreshMonthView();
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MonthCalendar.this, 7);
+        calendarRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void refreshMonthView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         ArrayList<LocalDate> daysInMonth = daysInMonthArray();
-
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 

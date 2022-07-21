@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -117,5 +118,12 @@ public class User {
 
     public static String getEmail() {
         return email;
+    }
+
+    public static void importTimetable(String nusmodsUrl, LocalDate ayStart, int semester, Context context) {
+        ArrayList<Event> events = CalendarUtils.gettingTimetable(nusmodsUrl, ayStart, semester);
+        for (Event event: events) {
+            addEvent(event, context);
+        }
     }
 }

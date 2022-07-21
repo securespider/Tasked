@@ -31,6 +31,12 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         setWeekView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshWeekView();
+    }
+
     private void initWidgets()
     {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
@@ -39,17 +45,20 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     }
 
     public void selectWeekAction(View view) {
-        CalendarUtils.selectDateDialog(this, this::setWeekView);
+        CalendarUtils.selectDateDialog(this, this::refreshWeekView);
     }
 
-    private void setWeekView()
-    {
+    private void setWeekView() {
+        refreshWeekView();
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
+        calendarRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void refreshWeekView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.selectedDate);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(days, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
         setEventAdapter();
     }
@@ -84,13 +93,6 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
             setWeekView();
         }
         return true;
-    }
-
-    @Override
-    protected void onResume()
-    {
-        setWeekView();
-        super.onResume();
     }
 
     private void setEventAdapter() {

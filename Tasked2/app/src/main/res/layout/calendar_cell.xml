@@ -28,16 +28,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintVertical_bias="0.60"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
         <ImageView
             android:id="@+id/imgEventRed"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:src="@drawable/red_simple_circle"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/imgEventBlue"
@@ -45,7 +46,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:src="@drawable/blue_simple_circle"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
 
         <ImageView
@@ -53,9 +54,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:src="@drawable/green_simple_circle"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
     </LinearLayout>
 

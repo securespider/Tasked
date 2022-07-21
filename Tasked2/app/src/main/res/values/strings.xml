@@ -11,5 +11,7 @@
     <string name="changePass">Reset your password</string>
     <string name="profile">Profile</string>
     <string name="notif">Receive notification in advance</string>
+    <string name="NUSMODScompat">Import timetable using NUSMODS (Beta):</string>
+    <string name="NUSMODScompatHint">NUSMODS URL</string>
 
 </resources>
