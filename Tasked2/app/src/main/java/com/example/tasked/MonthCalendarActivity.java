@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Used to show the month in its widest view
  */
-public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.OnItemListener
+public class MonthCalendarActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
 {
     private Button monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -43,7 +43,7 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MonthCalendar.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MonthCalendarActivity.this);
 
         //Setting message manually and performing action on button click
         builder.setMessage("You are about to logout. Do you wish to continue?")
@@ -74,7 +74,7 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
 
     private void setMonthView() {
         refreshMonthView();
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MonthCalendar.this, 7);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MonthCalendarActivity.this, 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
     }
 
@@ -110,18 +110,18 @@ public class MonthCalendar extends AppCompatActivity implements CalendarAdapter.
     public boolean onLongItemClick(int position, LocalDate date) {
         if (date != null) {
             CalendarUtils.selectedDate = date;
-            startActivity(new Intent(MonthCalendar.this, EventEditActivity.class));
+            startActivity(new Intent(MonthCalendarActivity.this, EventEditActivity.class));
             setMonthView();
         }
         return true;
     }
 
     public void weeklyAction(View view) {
-        startActivity(new Intent(MonthCalendar.this, WeekViewActivity.class));
+        startActivity(new Intent(MonthCalendarActivity.this, WeekViewActivity.class));
     }
 
     public void profileAction(View view) {
-        startActivity(new Intent(MonthCalendar.this, Profile.class));
+        startActivity(new Intent(MonthCalendarActivity.this, ProfileActivity.class));
     }
 }
 

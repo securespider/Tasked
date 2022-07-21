@@ -120,6 +120,9 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     }
 
     public void profileAction(View view) {
-        startActivity(new Intent(WeekViewActivity.this, Profile.class));
+        startActivity(new Intent(WeekViewActivity.this, ProfileActivity.class));
+    }
+    public void templateEventAction(View view) {
+        startActivity(new Intent(WeekViewActivity.this, EventTemplatesActivity.class));
     }
 }

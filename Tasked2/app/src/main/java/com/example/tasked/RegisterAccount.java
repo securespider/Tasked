@@ -31,9 +31,9 @@ public class RegisterAccount extends AppCompatActivity {
     }
 
     private void initWidgets() {
-        email = (EditText) findViewById(R.id.etRegEmail);
-        password1 = (EditText) findViewById(R.id.etRegPassword1);
-        password2 = (EditText) findViewById(R.id.etRegPassword2);
+        email = findViewById(R.id.etRegEmail);
+        password1 = findViewById(R.id.etRegPassword1);
+        password2 = findViewById(R.id.etRegPassword2);
 
     }
 
@@ -101,7 +101,7 @@ public class RegisterAccount extends AppCompatActivity {
                         User.of(mAuth.getCurrentUser(), strEmail);
                         Toast.makeText(getApplicationContext(), "Account created.",
                                 Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterAccount.this, MonthCalendar.class));
+                        startActivity(new Intent(RegisterAccount.this, MonthCalendarActivity.class));
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(RegisterAccount.this, "Authentication failed.",

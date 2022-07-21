@@ -78,20 +78,20 @@ public class DailyCalendarActivity extends AppCompatActivity
         return list;
     }
 
-    public void previousDayAction(View view)
-    {
+    public void previousDayAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusDays(1);
         setDayView();
     }
 
-    public void nextDayAction(View view)
-    {
+    public void nextDayAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusDays(1);
         setDayView();
     }
 
-    public void newEventAction(View view)
-    {
-        startActivity(new Intent(this, EventEditActivity.class));
+    public void newEventAction(View view) {
+        startActivity(new Intent(DailyCalendarActivity.this, EventEditActivity.class));
+    }
+    public void templateEventAction(View view) {
+        startActivity(new Intent(DailyCalendarActivity.this, EventTemplatesActivity.class));
     }
 }

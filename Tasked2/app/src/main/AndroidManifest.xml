@@ -3,8 +3,8 @@
     package="com.example.tasked">
     <!-- Check for Internet connection -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,12 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tasked">
         <activity
-            android:name=".Profile"
+            android:name=".EventTemplatesActivity"
             android:exported="false" />
         <activity
-            android:name=".ForgetPassword"
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgetPasswordActivity"
             android:exported="false"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".RegisterAccount"
             android:exported="false" />
@@ -27,7 +30,7 @@
         <activity android:name=".EventEditActivity" />
         <activity android:name=".WeekViewActivity" />
         <activity
-            android:name=".MonthCalendar"
+            android:name=".MonthCalendarActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
@@ -38,7 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".ReminderBroadcast"/>
+
+        <receiver android:name=".ReminderBroadcast" />
     </application>
 
 </manifest>

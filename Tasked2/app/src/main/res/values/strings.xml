@@ -13,5 +13,8 @@
     <string name="notif">Receive notification in advance</string>
     <string name="NUSMODScompat">Import timetable using NUSMODS (Beta):</string>
     <string name="NUSMODScompatHint">NUSMODS URL</string>
+    <string name="templateHeader">Default Event Templates</string>
+    <string name="customTemplates">Custom Event Templates</string>
+    <string name="templateDescription">Create your own templates</string>
 
 </resources>

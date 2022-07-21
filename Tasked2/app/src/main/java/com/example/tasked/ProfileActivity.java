@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private EditText etNusmodsUrl;
 
@@ -39,7 +39,7 @@ public class Profile extends AppCompatActivity {
     }
 
     private void logoutDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
 
         //Setting message manually and performing action on button click
         builder.setMessage("You are about to logout. Do you wish to continue?")
@@ -58,11 +58,11 @@ public class Profile extends AppCompatActivity {
 
     private void logout() {
         User.logoutUser();
-        startActivity(new Intent(Profile.this, MainActivity.class));
+        startActivity(new Intent(ProfileActivity.this, MainActivity.class));
     }
 
     public void deleteProfileAction(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
 
         //Setting message manually and performing action on button click
         builder.setMessage("Are you sure you want to delete your account? This action is irreversible!")
@@ -80,7 +80,7 @@ public class Profile extends AppCompatActivity {
     }
 
     public void changePasswordAction(View view) {
-        startActivity(new Intent(Profile.this, ForgetPassword.class));
+        startActivity(new Intent(ProfileActivity.this, ForgetPasswordActivity.class));
     }
 
     public void logoutAction(View view) {
@@ -134,11 +134,11 @@ public class Profile extends AppCompatActivity {
         } else {
             start = LocalDate.of(2022, 8, 8);
         }
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbImportTimetable);
-        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> User.importTimetable(url, start, semester, Profile.this));
+        ProgressBar progressBar = findViewById(R.id.pbImportTimetable);
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> User.importTimetable(url, start, semester, ProfileActivity.this));
         future.thenRunAsync(() -> {
             progressBar.setVisibility(View.INVISIBLE);
-            Toast.makeText(Profile.this, "Timetable has been imported", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, "Timetable has been imported", Toast.LENGTH_SHORT).show();
         });
         progressBar.setVisibility(View.VISIBLE);
         future.join();

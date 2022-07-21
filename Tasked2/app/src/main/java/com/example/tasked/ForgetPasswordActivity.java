@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ForgetPassword extends AppCompatActivity {
+public class ForgetPasswordActivity extends AppCompatActivity {
 
     private EditText email;
     private static final CharSequence NOCONNECTION = "There is no connection. Please connect to the internet and try again.";
@@ -32,7 +32,7 @@ public class ForgetPassword extends AppCompatActivity {
     }
 
     private void initWidgets() {
-        email = (EditText) findViewById(R.id.etChgPass);
+        email = findViewById(R.id.etChgPass);
         auth = FirebaseAuth.getInstance();
     }
 
@@ -60,7 +60,7 @@ public class ForgetPassword extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         User.logoutUser();
-                        startActivity(new Intent(ForgetPassword.this, MainActivity.class));
+                        startActivity(new Intent(ForgetPasswordActivity.this, MainActivity.class));
                         Toast.makeText(getApplicationContext(), SUCCESS, Toast.LENGTH_SHORT).show();
                     } else {
                         if (!isOnline()) {

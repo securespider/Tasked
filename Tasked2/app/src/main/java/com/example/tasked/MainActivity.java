@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.time.LocalDate;
 
 /**
  * This is the login page and the first activity that the user will interact with.
@@ -60,17 +57,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initWidgets() {
 
-        email = (EditText) findViewById(R.id.etName);
-        password = (EditText) findViewById(R.id.etPassword);
-        login = (Button) findViewById(R.id.btnLogin);
-        Button register = (Button) findViewById(R.id.btnRegisterAccount);
-        Button forgetPassword = (Button) findViewById(R.id.btnForgetPassword);
-        errorMessage = (TextView) findViewById(R.id.tvError);
+        email = findViewById(R.id.etName);
+        password = findViewById(R.id.etPassword);
+        login = findViewById(R.id.btnLogin);
+        Button register = findViewById(R.id.btnRegisterAccount);
+        Button forgetPassword = findViewById(R.id.btnForgetPassword);
+        errorMessage = findViewById(R.id.tvError);
 
         // Onclick methods for register and forgetPassword
         register.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, RegisterAccount.class)));
 
-        forgetPassword.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ForgetPassword.class)));
+        forgetPassword.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ForgetPasswordActivity.class)));
     }
 
     private boolean isInputValid(String strEmail, String strPassword) {
@@ -124,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         User.of(mAuth.getCurrentUser(), strEmail);
 
-                        Intent intent = new Intent(MainActivity.this, MonthCalendar.class); // used to move to other activity
+                        Intent intent = new Intent(MainActivity.this, MonthCalendarActivity.class); // used to move to other activity
                         startActivity(intent);
                     } else {
                         // If sign in fails, display a message to the user.

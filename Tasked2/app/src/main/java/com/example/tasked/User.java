@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-
 public class User {
 
     // There should only be one instance of a user
@@ -79,11 +78,16 @@ public class User {
         return events;
     }
 
-    public static void addEvent(Event event, Context context) {
-        Event.eventsList.add(event);
-        Map<String, Object> map = event.toMap();
-        REF.child(String.valueOf(event.hashCode())).setValue(map);
-        event.setReminder(context, false);
+    public static void addEvent(Event newEvent, Context context) {
+        for (Event event : Event.eventsList) {
+            if (event.equals(newEvent)) {
+                return;
+            }
+        }
+        Event.eventsList.add(newEvent);
+        Map<String, Object> map = newEvent.toMap();
+        REF.child(String.valueOf(newEvent.hashCode())).setValue(map);
+        newEvent.setReminder(context, false);
     }
 
     public static void removeEvent(Event event, Context context) {
