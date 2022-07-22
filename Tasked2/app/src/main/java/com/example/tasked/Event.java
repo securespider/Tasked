@@ -68,7 +68,7 @@ public class Event implements Comparable<Event> {
             int startHour = event.startEventTime.getHour();
             int endHour = event.endEventTime.getHour();
             // time is between start and end time of 
-            if(event.getEventDate().equals(date) && startHour <= cellHour && endHour > cellHour)
+            if (event.getEventDate().equals(date) && startHour <= cellHour && endHour >= cellHour)
                 events.add(event);
         }
 
