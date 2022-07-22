@@ -135,13 +135,16 @@ public class ProfileActivity extends AppCompatActivity {
             start = LocalDate.of(2022, 8, 8);
         }
         ProgressBar progressBar = findViewById(R.id.pbImportTimetable);
-        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> User.importTimetable(url, start, semester, ProfileActivity.this));
-        future.thenRunAsync(() -> {
-            progressBar.setVisibility(View.INVISIBLE);
+        Thread thread = new Thread(() -> User.importTimetable(url, start, semester, ProfileActivity.this));
+        try {
+            progressBar.setVisibility(View.VISIBLE);
+            thread.join();
             Toast.makeText(ProfileActivity.this, "Timetable has been imported", Toast.LENGTH_SHORT).show();
-        });
-        progressBar.setVisibility(View.VISIBLE);
-        future.join();
+        } catch (InterruptedException exception) {
+            Toast.makeText(ProfileActivity.this, "Error with importing timetable", Toast.LENGTH_SHORT).show();
+        } finally {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     private int semFromTimetable(String truncUrl) {
