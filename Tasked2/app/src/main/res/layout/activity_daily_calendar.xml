@@ -23,7 +23,7 @@
             android:background="@null"
             android:textStyle="bold"
             android:onClick="previousDayAction"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_height"/>
 
         <Button
             android:id="@+id/btnMonthDay"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:background="@color/darkMustard"
             android:text="June 13"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_height"
             android:textAlignment="center"
             android:textColor="@color/black"/>
 
@@ -46,7 +46,7 @@
             android:background="@null"
             android:textStyle="bold"
             android:onClick="nextDayAction"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_height"/>
 
     </LinearLayout>
 
@@ -75,7 +75,7 @@
             android:textStyle="bold"
             android:onClick="newEventAction"
             android:layout_gravity="center"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_height" />
 
         <View
             android:layout_width="2dp"
@@ -92,7 +92,7 @@
             android:textStyle="bold"
             android:onClick="templateEventAction"
             android:layout_gravity="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_height"
             />
 
     </LinearLayout>

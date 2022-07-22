@@ -52,7 +52,7 @@
                 android:layout_marginStart="10dp"
                 android:text="Email:"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/text_height" />
 
             <TextView
                 android:id="@+id/tvEmail"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
-                android:textSize="20sp" />
+                android:textSize="@dimen/text_height" />
 
         </LinearLayout>
 
@@ -88,7 +88,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:text="@string/NUSMODScompat"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_height"
             android:textColor="@color/black"/>
 
         <EditText

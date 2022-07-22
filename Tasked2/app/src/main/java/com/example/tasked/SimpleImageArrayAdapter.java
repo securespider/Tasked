@@ -1,6 +1,7 @@
 package com.example.tasked;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -9,10 +10,12 @@ import android.widget.ImageView;
 
 public class SimpleImageArrayAdapter extends ArrayAdapter<Integer> {
     private final Integer[] images;
+    private final int dimension;
 
-    public SimpleImageArrayAdapter(Context context, Integer[] images) {
+    public SimpleImageArrayAdapter(Context context, Integer[] images, float dimension) {
         super(context, android.R.layout.simple_spinner_item, images);
         this.images = images;
+        this.dimension = (int) dimension;
     }
 
     @Override
@@ -29,9 +32,7 @@ public class SimpleImageArrayAdapter extends ArrayAdapter<Integer> {
         ImageView imageView = new ImageView(getContext());
         imageView.requestLayout();
         imageView.setBackgroundResource(images[position]);
-        imageView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        imageView.getLayoutParams().height = 100;
-        imageView.getLayoutParams().width = 100;
+        imageView.setLayoutParams(new AbsListView.LayoutParams(dimension, dimension));
         return imageView;
     }
 }

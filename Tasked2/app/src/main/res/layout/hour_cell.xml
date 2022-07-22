@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:id="@+id/timeTV"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_height"
         android:textColor="@color/black"
         android:text="10:00"/>
 

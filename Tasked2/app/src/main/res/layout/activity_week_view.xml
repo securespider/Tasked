@@ -22,7 +22,7 @@
             android:background="@null"
             android:textStyle="bold"
             android:onClick="dailyAction"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_height"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:textColor="@color/blue"
             android:background="@null"
             android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_height"/>
     </LinearLayout>
 
     <LinearLayout
@@ -51,7 +51,7 @@
             android:background="@null"
             android:textStyle="bold"
             android:onClick="previousWeekAction"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_height"/>
 
         <Button
             android:id="@+id/btnMonthYear2"
@@ -60,7 +60,7 @@
             android:layout_weight="2"
             android:layout_height="wrap_content"
             android:text="Feb 2021"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_height"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:background="@color/darkMustard"/>
@@ -74,7 +74,7 @@
             android:background="@null"
             android:textStyle="bold"
             android:onClick="nextWeekAction"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_height"/>
 
     </LinearLayout>
 
@@ -173,7 +173,7 @@
             android:textStyle="bold"
             android:onClick="newEventAction"
             android:layout_gravity="center"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_height" />
 
         <View
             android:layout_width="2dp"
@@ -190,7 +190,7 @@
             android:textStyle="bold"
             android:onClick="templateEventAction"
             android:layout_gravity="center"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_height" />
 
     </LinearLayout>
 

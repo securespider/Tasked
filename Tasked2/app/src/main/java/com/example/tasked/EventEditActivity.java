@@ -130,7 +130,7 @@ public class EventEditActivity extends AppCompatActivity
             }
         }));
 
-        SimpleImageArrayAdapter adapter = new SimpleImageArrayAdapter(EventEditActivity.this, EVENTCATIMAGES);
+        SimpleImageArrayAdapter adapter = new SimpleImageArrayAdapter(EventEditActivity.this, EVENTCATIMAGES, getResources().getDimension(R.dimen.spinner_height));
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         spEventCat.setAdapter(adapter);
         spEventCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
