@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 public class Event implements Comparable<Event> {
-    public static ArrayList<Event> eventsList = new ArrayList<>();
+    public static List<Event> eventsList = new ArrayList<>();
 
     /**
      * Return a list of events happening on that date
@@ -181,21 +182,21 @@ public class Event implements Comparable<Event> {
     }
 
     @Override
+    public int compareTo(Event o) {
+        return this.startEventTime.compareTo(o.startEventTime);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return Objects.equals(name, event.name) && Objects.equals(eventDate, event.eventDate) && Objects.equals(startEventTime, event.startEventTime) && Objects.equals(endEventTime, event.endEventTime);
+        return notif == event.notif && Objects.equals(name, event.name) && Objects.equals(description, event.description) && Objects.equals(eventDate, event.eventDate) && Objects.equals(startEventTime, event.startEventTime) && Objects.equals(endEventTime, event.endEventTime) && Objects.equals(color, event.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, eventDate, startEventTime, endEventTime);
-    }
-
-    @Override
-    public int compareTo(Event o) {
-        return this.startEventTime.compareTo(o.startEventTime);
+        return Objects.hash(name, description, eventDate, startEventTime, endEventTime, color);
     }
 
     // Testing purposes

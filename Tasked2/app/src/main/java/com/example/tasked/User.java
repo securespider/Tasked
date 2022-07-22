@@ -14,16 +14,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
-public class User {
+public final class User {
 
     // There should only be one instance of a user
     private static User user;
 
     // Constant
-    private static DatabaseReference REF;
+    private static DatabaseReference EVENTREF;
+    private static DatabaseReference CUSTOMTEMPLATEREF;
+    private static DatabaseReference DEFAULTTEMPLATEREF;
+
 
     // With these various attributes
     private static FirebaseUser currentUser;
@@ -35,36 +39,37 @@ public class User {
         User.currentUser = user;
         User.uid = user.getUid();
         User.email = email;
-        REF = CalendarUtils.DB.getReference("Users").child(uid);
+        EVENTREF = CalendarUtils.DB.getReference("Users").child(uid);
+        CUSTOMTEMPLATEREF = CalendarUtils.DB.getReference("Templates").child("Custom").child(uid);
+        DEFAULTTEMPLATEREF = CalendarUtils.DB.getReference("Templates").child("Default");
     }
 
     public static User of(FirebaseUser user, String email) {
         User.user = new User(user, email);
-        retrieveAllData();
+        Event.eventsList = retrieveEventData(EVENTREF);
         return User.user;
     }
 
-    public static void retrieveAllData() {
-        REF.keepSynced(true);
-        REF.addListenerForSingleValueEvent(new ValueEventListener() {
+    public static ArrayList<Event> retrieveEventData(DatabaseReference ref) {
+        ArrayList<Event> result = new ArrayList<>();
+        ref.keepSynced(true);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Event> result = new ArrayList<>();
                 if (snapshot.exists()) {
                     @SuppressWarnings("unchecked")
                     Map<String, Map<String, String>> dataSnapshot = (Map<String, Map<String, String>>) snapshot.getValue();
-                    result = collectEvents(dataSnapshot);
+                    result.addAll(collectEvents(dataSnapshot));
                 }
-                Event.eventsList = result;
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Event.eventsList = new ArrayList<>();
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
-        REF.keepSynced(false);
+        ref.keepSynced(false);
+        return result;
     }
+
     private static ArrayList<Event> collectEvents(Map<String, Map<String, String>> eventList) {
         if (eventList == null) {
             return new ArrayList<>();
@@ -86,14 +91,14 @@ public class User {
         }
         Event.eventsList.add(newEvent);
         Map<String, Object> map = newEvent.toMap();
-        REF.child(String.valueOf(newEvent.hashCode())).setValue(map);
+        EVENTREF.child(String.valueOf(newEvent.hashCode())).setValue(map);
         newEvent.setReminder(context, false);
     }
 
     public static void removeEvent(Event event, Context context) {
         if (Event.eventsList.contains(event)) {
             Event.eventsList.remove(event);
-            REF.child(String.valueOf(event.hashCode())).removeValue();
+            EVENTREF.child(String.valueOf(event.hashCode())).removeValue();
             if (event.isNotif()) {
                 event.setReminder(context, true);
             }
@@ -104,7 +109,7 @@ public class User {
         currentUser.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(context, "Profile has been deleted", Toast.LENGTH_SHORT).show();
-                REF.removeValue();
+                EVENTREF.removeValue();
                 FirebaseAuth.getInstance().signOut();
                 successAction.run();
             } else {
@@ -129,5 +134,20 @@ public class User {
         for (Event event: events) {
             addEvent(event, context);
         }
+    }
+
+
+
+    // Template methods
+
+    public static ArrayList<Event> retrieveCustomTemplateData() {
+        return retrieveEventData(CUSTOMTEMPLATEREF);
+    }
+    public static ArrayList<Event> retrieveDefaultTemplateData() {
+        return retrieveEventData(DEFAULTTEMPLATEREF);
+    }
+
+    public static void addTemplate(Event newEvent) {
+        CUSTOMTEMPLATEREF.child(newEvent.getName()).setValue(newEvent.toMap());
     }
 }

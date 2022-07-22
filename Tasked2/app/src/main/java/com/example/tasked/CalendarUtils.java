@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -212,13 +213,26 @@ public class CalendarUtils {
                             // TODO: recursive event for weeks of lessons
                             String name = entry.getKey() + " " + lessonType;
                             String description = Lesson.getString("venue");
-                            result.add(new Event(name,
-                                                nearestDayOfWeek(ayStart, day).toString(),
-                                                startTime,
-                                                endTime,
-                                                description,
-                                                "false",
-                                                "red"));
+                            Object weeks = Lesson.get("weeks");
+                            List<Integer> weeksList = new ArrayList<>();
+                            if (weeks instanceof JSONObject) {
+                                weeks =  ((JSONObject) weeks).optJSONArray("weeks");
+                            }
+                            if (weeks instanceof JSONArray) {
+                                for (int counter = 0; counter < ((JSONArray) weeks).length(); counter++) {
+                                    weeksList.add(((JSONArray) weeks).getInt(counter));
+                                }
+                            }
+                            LocalDate startDate = nearestDayOfWeek(ayStart, day);
+                            for (Integer x: weeksList) {
+                                result.add(new Event(name,
+                                        startDate.plusWeeks(x-1).toString(),
+                                        startTime,
+                                        endTime,
+                                        description,
+                                        "false",
+                                        "red"));
+                            }
                         }
                     }
                 }
