@@ -67,7 +67,7 @@ public class RegisterAccount extends AppCompatActivity {
         }
 
         if (strPassword1.length() < 7) {
-            password1.setError("Password should be longer than 8 characters");
+            password1.setError("Password should be at least 6 characters");
             password1.requestFocus();
             return false;
         }

@@ -12,9 +12,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 
@@ -130,9 +133,17 @@ public final class User {
     }
 
     public static void importTimetable(String nusmodsUrl, LocalDate ayStart, int semester, Context context) {
-        ArrayList<Event> events = CalendarUtils.gettingTimetable(nusmodsUrl, ayStart, semester);
-        for (Event event: events) {
-            addEvent(event, context);
+        try {
+            ArrayList<Event> events = CalendarUtils.gettingTimetable(nusmodsUrl, ayStart, semester);
+            for (Event event: events) {
+                addEvent(event, context);
+            }
+        }  catch (MalformedURLException malformedURLException) {
+            Toast.makeText(context, "URL is invalid", Toast.LENGTH_SHORT).show();
+        } catch (IOException ioException) {
+            Toast.makeText(context, "There is an error with the connection", Toast.LENGTH_SHORT).show();
+        } catch (JSONException jsonException) {
+            Toast.makeText(context, "There is a problem with module(s) in your timetable", Toast.LENGTH_SHORT).show();
         }
     }
 

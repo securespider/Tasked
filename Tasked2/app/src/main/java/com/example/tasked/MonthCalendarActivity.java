@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -37,6 +38,10 @@ public class MonthCalendarActivity extends AppCompatActivity implements Calendar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month_calendar);
         initWidgets();
+
+        // tutorial
+        Toast.makeText(MonthCalendarActivity.this, "Hold a date to create new Event", Toast.LENGTH_LONG).show();
+
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
     }
@@ -61,11 +66,9 @@ public class MonthCalendarActivity extends AppCompatActivity implements Calendar
         alert.show();
     }
 
-    private void initWidgets()
-    {
+    private void initWidgets() {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.btnMonthYear);
-
     }
 
     public void selectMonthAction(View view) {

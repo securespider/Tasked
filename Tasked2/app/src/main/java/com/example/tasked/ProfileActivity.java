@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.LocalDate;
-import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -136,11 +135,13 @@ public class ProfileActivity extends AppCompatActivity {
         }
         ProgressBar progressBar = findViewById(R.id.pbImportTimetable);
         Thread thread = new Thread(() -> User.importTimetable(url, start, semester, ProfileActivity.this));
+        thread.setUncaughtExceptionHandler((t, e) -> Toast.makeText(ProfileActivity.this, "Error with importing timetable", Toast.LENGTH_SHORT).show());
         try {
             progressBar.setVisibility(View.VISIBLE);
+            thread.start();
             thread.join();
             Toast.makeText(ProfileActivity.this, "Timetable has been imported", Toast.LENGTH_SHORT).show();
-        } catch (InterruptedException exception) {
+        } catch (Exception exception) {
             Toast.makeText(ProfileActivity.this, "Error with importing timetable", Toast.LENGTH_SHORT).show();
         } finally {
             progressBar.setVisibility(View.INVISIBLE);

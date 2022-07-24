@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -159,23 +158,22 @@ public class CalendarUtils {
     }
 
     // NUSMODS compatibility - naming scheme as per schema
-    public static ArrayList<Event> gettingTimetable(String nusmodsUrl, LocalDate ayStart, int semester) {
+    public static ArrayList<Event> gettingTimetable(String nusmodsUrl, LocalDate ayStart, int semester) throws IOException, JSONException{
         ArrayList<Event> result = new ArrayList<>();
         String year = "2022-2023";
         String APICALL = "https://api.nusmods.com/v2/" + year + "/modules/";
         HashMap<String, HashMap<String, String>> modules = modulesFromTimetable(nusmodsUrl);
 
-
         for (Map.Entry<String, HashMap<String, String>> entry: modules.entrySet()) {
-            try {
-                URL url = new URL(APICALL + entry.getKey() + ".json");
-                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("Content-Type", "application/json");
-                if (connection.getResponseCode() == 404) {
-                    continue;
-                }
 
+            URL url = new URL(APICALL + entry.getKey() + ".json");
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "application/json");
+            if (connection.getResponseCode() == 404) {
+                continue;
+            }
+            try {
                 // object is returned and processed into a JSONObject
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(connection.getInputStream()));
@@ -210,7 +208,6 @@ public class CalendarUtils {
                             if (day == null) {
                                 day = LocalDate.now().toString();
                             }
-                            // TODO: recursive event for weeks of lessons
                             String name = entry.getKey() + " " + lessonType;
                             String description = Lesson.getString("venue");
                             Object weeks = Lesson.get("weeks");
@@ -236,14 +233,8 @@ public class CalendarUtils {
                         }
                     }
                 }
+            } finally {
                 connection.disconnect();
-
-            } catch (MalformedURLException malformedURLException) {
-                // TODO: handle invalid urls
-            } catch (IOException ioException) {
-                // TODO: handle no internet connection
-            } catch (JSONException jsonException) {
-                // TODO
             }
         }
         return result;
