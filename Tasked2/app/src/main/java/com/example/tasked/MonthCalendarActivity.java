@@ -38,10 +38,6 @@ public class MonthCalendarActivity extends AppCompatActivity implements Calendar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month_calendar);
         initWidgets();
-
-        // tutorial
-        Toast.makeText(MonthCalendarActivity.this, "Hold a date to create new Event", Toast.LENGTH_LONG).show();
-
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
     }

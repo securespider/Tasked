@@ -10,7 +10,7 @@
     <string name="forgetPass">Forget password</string>
     <string name="changePass">Reset your password</string>
     <string name="profile">Profile</string>
-    <string name="notif">Receive notification in advance</string>
+    <string name="notif">Receive notification when event starts</string>
     <string name="NUSMODScompat">Import timetable using NUSMODS (Beta):</string>
     <string name="NUSMODScompatHint">NUSMODS URL</string>
     <string name="templateHeader">Default Event Templates</string>

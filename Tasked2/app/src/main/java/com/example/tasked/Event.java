@@ -62,13 +62,11 @@ public class Event implements Comparable<Event> {
     {
         ArrayList<Event> events = new ArrayList<>();
 
-        for(Event event : eventsList)
-        {
+        for(Event event : eventsList) {
             int cellHour = time.getHour();
             int startHour = event.startEventTime.getHour();
-            int endHour = event.endEventTime.getHour();
             // time is between start and end time of 
-            if (event.getEventDate().equals(date) && startHour <= cellHour && endHour >= cellHour)
+            if (event.getEventDate().equals(date) && startHour <= cellHour && event.endEventTime.isAfter(time))
                 events.add(event);
         }
 
@@ -177,7 +175,7 @@ public class Event implements Comparable<Event> {
             NotificationUtils notif = new NotificationUtils(context);
             long notifTime = CalendarUtils.localDateTimeToCalendar(this.eventDate, this.startEventTime)
                     .getTimeInMillis();
-            notif.setReminder(notifTime, this.name, "Your event is starting soon!", this.hashCode(), isDelete);
+            notif.setReminder(notifTime, this.name, "Your event is starting!", this.hashCode(), isDelete);
         }
     }
 
