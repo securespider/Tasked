@@ -122,6 +122,10 @@ public class MonthCalendarActivity extends AppCompatActivity implements Calendar
     public void profileAction(View view) {
         startActivity(new Intent(MonthCalendarActivity.this, ProfileActivity.class));
     }
+
+    public void dailyAction(View view) {
+        startActivity(new Intent(MonthCalendarActivity.this, DailyCalendarActivity.class));
+    }
 }
 
 
