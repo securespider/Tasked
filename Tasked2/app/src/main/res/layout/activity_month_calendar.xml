@@ -9,41 +9,13 @@
     tools:context=".MonthCalendarActivity"
     android:background="@color/mustard">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="2"
-            android:text="Weekly"
-            android:textColor="@color/blue"
-            android:background="@null"
-            android:textStyle="bold"
-            android:onClick="weeklyAction"
-            android:textSize="@dimen/text_height"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="profileAction"
-            android:text="@string/profile"
-            android:textColor="@color/blue"
-            android:background="@null"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_height"/>
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="30dp">
 
         <Button
             android:layout_width="0dp"
@@ -198,6 +170,16 @@
                 android:text="Day"
                 android:background="@null"
                 android:onClick="dailyAction"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_baseline_face_24"
+                android:onClick="profileAction"
+                android:text="@string/profile"
+                android:background="@null"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

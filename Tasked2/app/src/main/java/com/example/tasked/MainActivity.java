@@ -16,7 +16,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.time.LocalDate;
 
 /**
  * This is the login page and the first activity that the user will interact with.
@@ -115,13 +118,21 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(MainActivity.this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user == null || !user.isEmailVerified()) {
+                            email.setError("Email not verified!");
+                            email.requestFocus();
+                            return;
+                        }
+
                         if (CalendarUtils.DB == null) {
                             CalendarUtils.DB = FirebaseDatabase.getInstance("https://tasked-44a12-default-rtdb.asia-southeast1.firebasedatabase.app/");
                             CalendarUtils.DB.setPersistenceEnabled(true);
                         }
-                        User.of(mAuth.getCurrentUser(), strEmail);
 
+                        User.of(user, strEmail);
                         Intent intent = new Intent(MainActivity.this, MonthCalendarActivity.class); // used to move to other activity
+                        CalendarUtils.selectedDate = LocalDate.now();
                         startActivity(intent);
                     } else {
                         // If sign in fails, display a message to the user.

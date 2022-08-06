@@ -138,6 +138,16 @@
             android:background="@null"
             android:textColor="@color/blue"/>
 
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_baseline_face_24"
+            android:onClick="profileAction"
+            android:text="@string/profile"
+            android:background="@null"
+            android:textStyle="bold"/>
+
     </LinearLayout>
 
 </LinearLayout>

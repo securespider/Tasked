@@ -38,7 +38,6 @@ public class MonthCalendarActivity extends AppCompatActivity implements Calendar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month_calendar);
         initWidgets();
-        CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
     }
 

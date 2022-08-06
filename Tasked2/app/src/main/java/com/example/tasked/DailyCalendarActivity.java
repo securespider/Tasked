@@ -96,12 +96,15 @@ public class DailyCalendarActivity extends AppCompatActivity
     }
     public void weeklyAction(View view) {
         Intent intent = new Intent(DailyCalendarActivity.this, WeekViewActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
     public void monthlyAction(View view) {
         Intent intent = new Intent(DailyCalendarActivity.this, MonthCalendarActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    public void profileAction(View view) {
+        startActivity(new Intent(DailyCalendarActivity.this, ProfileActivity.class));
     }
 }

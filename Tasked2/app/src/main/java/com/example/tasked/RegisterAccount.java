@@ -10,9 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterAccount extends AppCompatActivity {
@@ -98,10 +102,25 @@ public class RegisterAccount extends AppCompatActivity {
                             CalendarUtils.DB.setPersistenceEnabled(true);
                             
                         }
-                        User.of(mAuth.getCurrentUser(), strEmail);
-                        Toast.makeText(getApplicationContext(), "Account created.",
-                                Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterAccount.this, MonthCalendarActivity.class));
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            user.sendEmailVerification()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(getApplicationContext(), "Check email to verify email.",
+                                                Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(RegisterAccount.this, "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                        }
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(RegisterAccount.this, "Authentication failed.",

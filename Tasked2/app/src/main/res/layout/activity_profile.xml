@@ -19,137 +19,189 @@
         android:textColor="@color/black"
         android:text="Settings"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="User Settings"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="3dip"
-            android:layout_margin="10dp"
-            android:background="@color/gray" />
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/llProfile"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
-                android:text="Email:"
+                android:text="User Settings"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_height" />
+                android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/tvEmail"
-                android:layout_width="wrap_content"
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dip"
+                android:layout_margin="10dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:textSize="@dimen/text_height" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:text="Email:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_height" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="Change Password"
-            android:onClick="changePasswordAction"
-            android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:textSize="@dimen/text_height" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="Logout"
-            android:onClick="logoutAction"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/NUSMODScompat"
-            android:textSize="@dimen/text_height"
-            android:textColor="@color/black"/>
-
-        <EditText
-            android:id="@+id/etNusmodUrl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:hint="@string/NUSMODScompatHint"
-            android:textSize="15sp"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            </LinearLayout>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
-                android:text="Import Timetable"
-                android:onClick="importTimetable"
+                android:text="Change Password"
+                android:onClick="changePasswordAction"
                 android:textSize="15sp" />
 
-            <ProgressBar
-                android:id="@+id/pbImportTimetable"
+            <Button
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:visibility="invisible"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text="Logout"
+                android:onClick="logoutAction"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/NUSMODScompat"
+                android:textSize="@dimen/text_height"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/etNusmodUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="@string/NUSMODScompatHint"
+                android:textSize="15sp"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:text="Import Timetable"
+                    android:onClick="importTimetable"
+                    android:textSize="15sp" />
+
+                <ProgressBar
+                    android:id="@+id/pbImportTimetable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Profile Settings"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dip"
+                android:layout_margin="10dp"
+                android:background="@color/gray" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text="Delete Profile"
+                android:onClick="deleteProfileAction"
+                android:textSize="15sp"
+                android:background="@drawable/btn_shape_warning" />
+
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Profile Settings"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_bar_height"
+            android:orientation="horizontal"
+            android:layout_alignBottom="@+id/llProfile"
+            android:background="@color/mustard">
 
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_baseline_calendar_month_24"
+                android:text="Month"
+                android:background="@null"
+                android:onClick="monthlyAction"/>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="3dip"
-            android:layout_margin="10dp"
-            android:background="@color/gray" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_baseline_calendar_view_week_24"
+                android:text="Week"
+                android:onClick="weeklyAction"
+                android:background="@null"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="Delete Profile"
-            android:onClick="deleteProfileAction"
-            android:textSize="15sp"
-            android:background="@drawable/btn_shape_warning" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_baseline_calendar_view_day_24"
+                android:text="Day"
+                android:background="@null"
+                android:onClick="dailyAction"/>
 
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_baseline_face_24"
+                android:textColor="@color/blue"
+                android:text="@string/profile"
+                android:background="@null"
+                android:textStyle="bold"/>
 
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

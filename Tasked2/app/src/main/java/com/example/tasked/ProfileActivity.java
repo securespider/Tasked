@@ -180,4 +180,18 @@ public class ProfileActivity extends AppCompatActivity {
                             view.getWindowToken(), 0);
         }
     }
+
+    public void monthlyAction(View view) {
+        Intent intent = new Intent(ProfileActivity.this, MonthCalendarActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+    public void weeklyAction(View view) {
+        Intent intent = new Intent(ProfileActivity.this, WeekViewActivity.class);
+        startActivity(intent);
+    }
+    public void dailyAction(View view) {
+        Intent intent = new Intent(ProfileActivity.this, DailyCalendarActivity.class);
+        startActivity(intent);
+    }
 }
